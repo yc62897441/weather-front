@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navbar />
-    <WeatherOverview v-bind:propDataset="dataset" />
+    <WeatherOverview v-bind:propDatasetOneWeek="datasetOneWeek" />
     <Footer />
   </div>
 </template>
@@ -21,9 +21,23 @@ export default {
   },
   data() {
     return {
-      dataCategory: 'F-B0053-035',
+      dataCategory: {
+        oneWeek: 'F-B0053-031', //登山一週24小時天氣預報
+        oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
+        perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
+      },
       dataType: 'JSON',
-      dataset: {
+      datasetOneWeek: {
+        locations: {
+          location: []
+        }
+      },
+      datasetOneWeekDayNight: {
+        locations: {
+          location: []
+        }
+      },
+      datasetPerThreeHours: {
         locations: {
           location: []
         }
@@ -31,25 +45,24 @@ export default {
     }
   },
   methods: {
-    async fetchDataset() {
+    async fetchDatasetOneWeek() {
       try {
-        const dataCategory = this.dataCategory
+        const dataCategory = this.dataCategory.oneWeek
         const dataType = this.dataType
         const response = await indexAPI.test({ dataCategory, dataType })
         if (response.status !== 200) {
           throw new Error()
         }
-        this.dataset = {
+        this.datasetOneWeek = {
           ...response.data.dataset
         }
-        this.getEachDayHighestLowestTemperature()
       } catch (error) {
         console.warn(error)
       }
     },
   },
   mounted() {
-    this.fetchDataset()
+    this.fetchDatasetOneWeek()
   }
 }
 </script>
