@@ -1,0 +1,15 @@
+.home {
+  border: 2px solid red;
+}
+
+.navbar-container {
+  border: 2px solid blue;
+}
+
+.main-container {
+  border: 2px solid green;
+}
+
+.footer-container {
+  border: 2px solid yellow;
+}

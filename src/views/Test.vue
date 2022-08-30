@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import indexAPI from '../api/index'
+import indexAPI from '../api/index' 
 
 import Navbar from '../components/Navbar.vue'
 import WeatherOverview from '../components/WeatherOverview.vue'
