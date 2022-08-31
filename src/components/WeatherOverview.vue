@@ -21,7 +21,11 @@
       <tbody class="table-body">
         <tr class="table-row" v-for="locat in propDatasetOneWeek.locations.location"
           v-bind:key="locat.parameterSet.parameter.parameterValue">
-          <td class="table-cell table-cell-name">{{ locat.locationName }}</td>
+          <td class="table-cell table-cell-name">
+            <router-link class="link" v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
+              {{ locat.locationName }}
+            </router-link>
+          </td>
           <td class="table-cell table-cell-each-day" v-for="index in 7" v-bind:key="index">
             <div>
               <div>{{ locat.weatherElement[3].time[index - 1].elementValue.value }}°C</div>
