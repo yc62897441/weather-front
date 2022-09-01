@@ -10,7 +10,7 @@
           <thead class="table-header">
             <tr class="table-row">
               <th class="table-cell table-cell-name">類型</th>
-              <th class="table-cell table-cell-each-day" v-for="time in mountainOneWeek.weatherElement[3].time"
+              <th class="table-cell mountain-table-cell-each-day" v-for="time in mountainOneWeek.weatherElement[3].time"
                 v-bind:key="'date' + time.startTime">
                 <div>{{ time.startTime.slice(0, 10) }}</div>
               </th>
@@ -22,11 +22,11 @@
               v-bind:key="weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
 
-              <td class="table-cell table-cell-each-day" v-for="index in 7" v-bind:key="index">
+              <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
                 <div>
                   <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
-                      1].elementValue.value
-                  }}</div>
+                    1].elementValue.value
+                    }}</div>
                 </div>
               </td>
             </tr>
@@ -40,8 +40,8 @@
           <thead class="table-header">
             <tr class="table-row">
               <th class="table-cell table-cell-name">類型</th>
-              <th class="table-cell table-cell-each-day" v-for="time in mountainPerThreeHours.weatherElement[0].time"
-                v-bind:key="'dataTime' + time">
+              <th class="table-cell mountain-table-cell-each-day"
+                v-for="time in mountainPerThreeHours.weatherElement[0].time" v-bind:key="'dataTime' + time">
                 <div>{{ time.dataTime.slice(0, 10) }} {{ time.dataTime.slice(11, 16) }}</div>
               </th>
             </tr>
@@ -50,11 +50,27 @@
             <tr class="table-row" v-for="weatherElement in mountainPerThreeHours.weatherElement"
               v-bind:key="weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
-              <td class="table-cell table-cell-each-day" v-for="index in 24" v-bind:key="index">
-                <div v-if="weatherElement.time[index - 1]">
-                  {{ weatherElement.time[index - 1].elementValue.value }}
-                </div>
-              </td>
+              <template v-if="weatherElement.time.length === 24">
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="index">
+                  <div v-if="weatherElement.time[index - 1]">
+                    {{ weatherElement.time[index - 1].elementValue.value }}
+                  </div>
+                </td>
+              </template>
+              <template v-else-if="weatherElement.time.length === 12">
+                <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="index">
+                  <div v-if="weatherElement.time[index - 1]">
+                    {{ weatherElement.time[index - 1].elementValue.value }}
+                  </div>
+                </td>
+              </template>
+              <template v-else-if="weatherElement.time.length === 6">
+                <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="index">
+                  <div v-if="weatherElement.time[index - 1]">
+                    {{ weatherElement.time[index - 1].elementValue.value }}
+                  </div>
+                </td>
+              </template>
             </tr>
           </tbody>
         </table>
@@ -212,3 +228,16 @@ export default {
   },
 }
 </script>
+<style>
+.mountain-table-cell-each-day {
+  width: 120px;
+}
+
+.mountain-table-cell-each-day-colspan-2 {
+  width: 240px;
+}
+
+.mountain-table-cell-each-day-colspan-4 {
+  width: 480px;
+}
+</style>

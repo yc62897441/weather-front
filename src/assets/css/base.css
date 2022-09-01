@@ -178,7 +178,7 @@ table {
 .table-row {
   display: flex;
   flex-direction: row;
-  height: 50px;
+  min-height: 50px;
   border: 2px solid red;
 }
 
