@@ -33,6 +33,10 @@ router.beforeEach(async (to, from, next) => {
     console.log('beforeEach dispatch fetchDatasetOneWeek', )
     store.state.isFetchDatasetOneWeek = await store.dispatch('fetchDatasetOneWeek')
   }
+  if (!store.state.isFetchDatasetPerThreeHours) {
+    console.log('beforeEach dispatch fetchDatasetPerThreeHours',)
+    store.state.isFetchDatasetPerThreeHours = await store.dispatch('fetchDatasetPerThreeHours')
+  }
   next()
 })
 

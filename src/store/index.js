@@ -28,13 +28,19 @@ export default new Vuex.Store({
         location: []
       }
     },
-    isFetchDatasetOneWeek: false
+    isFetchDatasetOneWeek: false,
+    isFetchDatasetPerThreeHours: false
   },
   getters: {
   },
   mutations: {
     setDatasetOneWeek(state, data) {
       state.datasetOneWeek = {
+        ...data,
+      }
+    },
+    setDatasetPerThreeHours(state, data) {
+      state.datasetPerThreeHours = {
         ...data,
       }
     },
@@ -52,6 +58,24 @@ export default new Vuex.Store({
           ...response.data.dataset
         }
         commit('setDatasetOneWeek', data)
+        return true
+      } catch (error) {
+        console.warn(error)
+        return false
+      }
+    },
+    async fetchDatasetPerThreeHours({ commit }) {
+      try {
+        const dataCategory = store.state.dataCategory.perThreeHours
+        const dataType = store.state.dataType
+        const response = await indexAPI.test({ dataCategory, dataType })
+        if (response.status !== 200) {
+          throw new Error()
+        }
+        const data = {
+          ...response.data.dataset
+        }
+        commit('setDatasetPerThreeHours', data)
         return true
       } catch (error) {
         console.warn(error)
