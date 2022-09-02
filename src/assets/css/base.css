@@ -146,22 +146,28 @@ table {
 /* global */
 /* global */
 /* global */
-.home {
-  border: 2px solid red;
+
+* {
+  box-sizing: border-box;
 }
+
+.home {}
 
 .main-container {
-  border: 2px solid green;
+  padding: 15px;
 }
 
-.footer-container {
-  border: 2px solid yellow;
+/* 表格相關 */
+.main-table {
+  background-color: #FBFBFB;
+  border: 2px solid #555555;
 }
 
 .table-header {
   /* 沒有加入 display: inline-block，則 table__body 的寬度會縮起來；每一列的高度也無法固定，會均分 height */
   display: inline-block;
   line-height: 20px;
+  border-bottom: 2px solid #555555;
 }
 
 .table-body {
@@ -175,7 +181,10 @@ table {
   display: flex;
   flex-direction: row;
   min-height: 50px;
-  border: 2px solid red;
+}
+
+.table-row:nth-child(2n) {
+  background-color: #E9E9E9;
 }
 
 .table-cell {
@@ -183,7 +192,7 @@ table {
   flex-direction: column;
   justify-content: center;
   text-align: center;
-  border: 1px solid green;
+  border-right: 1px solid #555555;
 }
 
 .table-cell div {
@@ -192,7 +201,6 @@ table {
   justify-content: center;
   align-items: center;
   flex: 1;
-  border: 1px solid purple;
 }
 
 .table-cell-name {
@@ -200,5 +208,10 @@ table {
 }
 
 .table-cell-each-day {
-  width: 275px;
+  width: 255px;
+}
+
+/* 連結相關 */
+.link {
+  text-decoration: none;
 }

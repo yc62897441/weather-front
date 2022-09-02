@@ -60,7 +60,9 @@ export default {
   flex-direction: row;
   align-items: center;
   width: 100%;
-  border: 10px solid blue;
+  height: 50px;
+  padding-left: 15px;
+  background-color: #EEEEEE;
 }
 
 .navbar-wrapper {

@@ -9,7 +9,7 @@
         <table class="main-table">
           <thead class="table-header">
             <tr class="table-row">
-              <th class="table-cell table-cell-name">類型</th>
+              <th class="table-cell table-cell-name"></th>
               <th class="table-cell mountain-table-cell-each-day" v-for="time in mountainOneWeek.weatherElement[3].time"
                 v-bind:key="'date' + time.startTime">
                 <div>{{ time.startTime.slice(0, 10) }}</div>
@@ -17,7 +17,7 @@
             </tr>
           </thead>
 
-          <tbody class="table-body">
+          <tbody class="table-body mountain-table-body">
             <tr class="table-row" v-for="weatherElement in mountainOneWeek.weatherElement"
               v-bind:key="weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
@@ -25,8 +25,8 @@
               <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
                 <div>
                   <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
-                    1].elementValue.value
-                    }}</div>
+                      1].elementValue.value
+                  }}</div>
                 </div>
               </td>
             </tr>
@@ -39,7 +39,7 @@
         <table class="main-table">
           <thead class="table-header">
             <tr class="table-row">
-              <th class="table-cell table-cell-name">類型</th>
+              <th class="table-cell table-cell-name"></th>
               <th class="table-cell mountain-table-cell-each-day"
                 v-for="time in mountainPerThreeHours.weatherElement[0].time" v-bind:key="'dataTime' + time">
                 <div>{{ time.dataTime.slice(0, 10) }} {{ time.dataTime.slice(11, 16) }}</div>
@@ -229,8 +229,21 @@ export default {
 }
 </script>
 <style>
+.mountain-table-body {
+  /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
+  display: block;
+  max-height: none;
+  overflow: visible;
+}
+
+.table-header .mountain-table-cell-each-day>div:nth-child(1) {
+  font-size: 1.2rem;
+  padding: 3px 0px;
+}
+
 .mountain-table-cell-each-day {
   width: 120px;
+  padding: 5px 0px;
 }
 
 .mountain-table-cell-each-day-colspan-2 {

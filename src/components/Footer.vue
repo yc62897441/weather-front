@@ -11,3 +11,15 @@ export default {
 
 }
 </script>
+
+<style>
+.footer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 75px;
+  padding-left: 15px;
+  background-color: #EEEEEE;
+}
+</style>
