@@ -6,8 +6,16 @@
           天氣總覽表
         </router-link>
       </div>
-      <div class="navbar-item">天氣條件檢索</div>
-      <div class="navbar-item">天氣地圖</div>
+      <div class="navbar-item">
+        <router-link class="link" to="/weatherFilter">
+          天氣條件檢索
+        </router-link>
+      </div>
+      <div class="navbar-item">
+        <router-link class="link" to="/weatherMap">
+          天氣地圖
+        </router-link>
+      </div>
     </div>
     <div class="search-wrapper">
       <input type="text" placeholder="搜尋山岳" v-on:keyup.prevent.stop="searchMountain" v-model="input">

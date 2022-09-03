@@ -17,6 +17,11 @@ const routes = [
     component: () => import('../views/WeatherFilter.vue')
   },
   {
+    path: '/weatherMap',
+    name: 'weatherMap',
+    component: () => import('../views/WeatherMap.vue')
+  },
+  {
     path: '/mountain/:id',
     name: 'mountain',
     component: () => import('../views/Mountain.vue')
