@@ -12,6 +12,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/weatherFilter',
+    name: 'weatherFilter',
+    component: () => import('../views/WeatherFilter.vue')
+  },
+  {
     path: '/mountain/:id',
     name: 'mountain',
     component: () => import('../views/Mountain.vue')
