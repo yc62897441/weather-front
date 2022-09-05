@@ -21,14 +21,25 @@
             <tr class="table-row" v-for="weatherElement in mountainOneWeek.weatherElement"
               v-bind:key="weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
-
-              <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
-                <div>
-                  <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
+              <template v-if="weatherElement.description === '天氣現象'">
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
+                  <div class="mountain-table-cell-each-day_info_Wx">
+                    <img
+                      v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
+                      v-bind:title="weatherElement.time[index - 1].elementValue[0].value"
+                      v-bind:alt="weatherElement.time[index - 1].elementValue[0].value">
+                  </div>
+                </td>
+              </template>
+              <template v-else>
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
+                  <div>
+                    <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
                       1].elementValue.value
-                  }}</div>
-                </div>
-              </td>
+                      }}</div>
+                  </div>
+                </td>
+              </template>
             </tr>
           </tbody>
         </table>
@@ -50,26 +61,38 @@
             <tr class="table-row" v-for="weatherElement in mountainPerThreeHours.weatherElement"
               v-bind:key="weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
-              <template v-if="weatherElement.time.length === 24">
+              <template v-if="weatherElement.description === '天氣現象'">
                 <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="index">
-                  <div v-if="weatherElement.time[index - 1]">
-                    {{ weatherElement.time[index - 1].elementValue.value }}
+                  <div class="mountain-table-cell-each-day_info_Wx" v-if="weatherElement.time[index - 1]">
+                    <img
+                      v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
+                      v-bind:title="weatherElement.time[index - 1].elementValue[0].value"
+                      v-bind:alt="weatherElement.time[index - 1].elementValue[0].value">
                   </div>
                 </td>
               </template>
-              <template v-else-if="weatherElement.time.length === 12">
-                <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="index">
-                  <div v-if="weatherElement.time[index - 1]">
-                    {{ weatherElement.time[index - 1].elementValue.value }}
-                  </div>
-                </td>
-              </template>
-              <template v-else-if="weatherElement.time.length === 6">
-                <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="index">
-                  <div v-if="weatherElement.time[index - 1]">
-                    {{ weatherElement.time[index - 1].elementValue.value }}
-                  </div>
-                </td>
+              <template v-else>
+                <template v-if="weatherElement.time.length === 24">
+                  <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="index">
+                    <div v-if="weatherElement.time[index - 1]">
+                      {{ weatherElement.time[index - 1].elementValue.value }}
+                    </div>
+                  </td>
+                </template>
+                <template v-else-if="weatherElement.time.length === 12">
+                  <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="index">
+                    <div v-if="weatherElement.time[index - 1]">
+                      {{ weatherElement.time[index - 1].elementValue.value }}
+                    </div>
+                  </td>
+                </template>
+                <template v-else-if="weatherElement.time.length === 6">
+                  <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="index">
+                    <div v-if="weatherElement.time[index - 1]">
+                      {{ weatherElement.time[index - 1].elementValue.value }}
+                    </div>
+                  </td>
+                </template>
               </template>
             </tr>
           </tbody>
@@ -103,7 +126,7 @@ export default {
   methods: {
     amendDatasetOneWeek() {
       // weatherElement 第 8, 9, 12, 13, 14 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
-      const datasetOneWeekWeatherElementNeedToSetIndexs = [7, 8, 11, 12, 13]
+      const datasetOneWeekWeatherElementNeedToSetIndexs = [7, 8, 11, 13]
       datasetOneWeekWeatherElementNeedToSetIndexs.forEach(index => {
         if (index === 7 || index === 8) {
           this.mountainOneWeek.weatherElement[index] = {
@@ -112,18 +135,6 @@ export default {
               elementValue: {
                 measures: eachTime.elementValue[1].measures,
                 value: eachTime.elementValue[1].value
-              },
-              endTime: eachTime.endTime,
-              startTime: eachTime.startTime
-            }))
-          }
-        } else if (index === 12) {
-          this.mountainOneWeek.weatherElement[index] = {
-            ...this.mountainOneWeek.weatherElement[index],
-            time: this.mountainOneWeek.weatherElement[index].time.map(eachTime => ({
-              elementValue: {
-                measures: eachTime.elementValue[0].measures,
-                value: eachTime.elementValue[0].value
               },
               endTime: eachTime.endTime,
               startTime: eachTime.startTime
@@ -146,7 +157,7 @@ export default {
     },
     amendDatasetPerThreeHours() {
       // weatherElement 第 7, 8, 10 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
-      const datasetPerThreeHoursWeatherElementNeedToSetIndexs = [6, 7, 9]
+      const datasetPerThreeHoursWeatherElementNeedToSetIndexs = [6, 7]
       datasetPerThreeHoursWeatherElementNeedToSetIndexs.forEach(index => {
         if (index === 6) {
           this.mountainPerThreeHours.weatherElement[index] = {
@@ -166,17 +177,6 @@ export default {
               elementValue: {
                 measures: eachTime.elementValue[1].measures,
                 value: eachTime.elementValue[1].value
-              },
-              dataTime: eachTime.dataTime
-            }))
-          }
-        } else if (index === 9) {
-          this.mountainPerThreeHours.weatherElement[index] = {
-            ...this.mountainPerThreeHours.weatherElement[index],
-            time: this.mountainPerThreeHours.weatherElement[index].time.map(eachTime => ({
-              elementValue: {
-                measures: eachTime.elementValue[0].measures,
-                value: eachTime.elementValue[0].value
               },
               dataTime: eachTime.dataTime
             }))
@@ -229,6 +229,7 @@ export default {
 }
 </script>
 <style>
+
 .mountain-table-body {
   /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
   display: block;
@@ -252,5 +253,10 @@ export default {
 
 .mountain-table-cell-each-day-colspan-4 {
   width: 480px;
+}
+
+.mountain-table-cell-each-day_info_Wx img{
+ width: 80px;
+ height: 80px;
 }
 </style>

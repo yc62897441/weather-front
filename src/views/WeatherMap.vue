@@ -17,6 +17,12 @@
                 <div> {{locat.weatherElement[0].time[0].elementValue.value}}°C</div>
                 <div>{{locat.weatherElement[3].time[0].elementValue.value}}%</div>
               </div>
+              <div class="mark_mountain_info_Wx">
+                <img
+                  v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + locat.weatherElement[9].time[0].elementValue[1].value +'.svg'"
+                  v-bind:title="locat.weatherElement[9].time[0].elementValue[0].value"
+                  v-bind:alt="locat.weatherElement[9].time[0].elementValue[0].value">
+              </div>
             </div>
           </router-link>
         </div>
@@ -106,13 +112,13 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px 4px;
+  padding: 4px 4px 2px;
   border: 1px solid rgb(85, 85, 85, 0.5);
   border-radius: 5px;
   text-decoration: none;
   color: rgb(0, 0, 0);
   font-size: 1rem;
-  background-color: rgb(233, 233, 233, 0.5);
+  background-color: rgb(255, 255, 255, 0.75);
 }
 
 .mark_mountain_info_name {
@@ -133,5 +139,15 @@ export default {
 .mark_mountain_info_value div:nth-child(2) {
   color: darkblue;
   font-weight: 400;
+}
+
+.mark_mountain_info_Wx {
+  width: 40px;
+  height: 40px;
+}
+
+.mark_mountain_info_Wx img {
+  width: 40px;
+  height: 40px;
 }
 </style>

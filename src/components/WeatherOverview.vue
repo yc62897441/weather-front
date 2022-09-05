@@ -31,7 +31,12 @@
               <div>{{ locat.weatherElement[3].time[index - 1].elementValue.value }}°C</div>
               <div>{{ locat.weatherElement[4].time[index - 1].elementValue.value }}°C</div>
               <div>{{ locat.weatherElement[9].time[index - 1].elementValue.value || 'NA' }}%</div>
-              <div>{{ locat.weatherElement[12].time[index - 1].elementValue[0].value }}</div>
+              <div>
+                <img
+                  v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + locat.weatherElement[12].time[index - 1].elementValue[1].value +'.svg'"
+                  v-bind:title="locat.weatherElement[12].time[index - 1].elementValue[0].value"
+                  v-bind:alt="locat.weatherElement[12].time[index - 1].elementValue[0].value">
+              </div>
             </div>
           </td>
         </tr>
@@ -53,7 +58,7 @@ export default {
 </script>
 
 <style>
-.table-header .table-cell-each-day > div:nth-child(1) {
+.table-header .table-cell-each-day>div:nth-child(1) {
   font-size: 1.2rem;
   padding: 3px 0px;
 }
@@ -73,5 +78,10 @@ export default {
 
 .table-cell-each-day div div:nth-child(2) {
   color: darkblue
+}
+
+.table-cell-each-day div div:nth-child(4) img {
+  width: 30px;
+  height: 30px;
 }
 </style>
