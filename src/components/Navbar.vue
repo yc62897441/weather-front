@@ -27,6 +27,10 @@
         </div>
       </template>
     </div>
+    <div class="user-wrapper">
+      <div v-if="isAuthenticated" v-on:click="signout" class="btn btn-danger">登出</div>
+      <div v-else  class="btn btn-success">登入/註冊</div>
+    </div>
   </div>
 </template>
 
@@ -41,7 +45,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['datasetOneWeek'])
+    ...mapState(['datasetOneWeek', 'currentUser', 'isAuthenticated'])
   },
   methods: {
     searchMountain() {
@@ -57,6 +61,10 @@ export default {
           }
         })
       }
+    },
+    signout() {
+      this.$store.commit('revokeAuthentication')
+      this.$router.push('/signin')
     }
   }
 }

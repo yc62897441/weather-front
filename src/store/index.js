@@ -62,6 +62,12 @@ export default new Vuex.Store({
       // 將使用者驗證用的 token 儲存在 state 中
       state.token = localStorage.getItem('token')
     },
+    revokeAuthentication(state) {
+      state.currentUser = {}
+      state.isAuthenticated = false
+      state.token = ''
+      localStorage.removeItem('token')
+    }
   },
   actions: {
     async fetchDatasetOneWeek({ commit }) {
