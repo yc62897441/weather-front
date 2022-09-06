@@ -1,4 +1,5 @@
 import { apiHelper } from '../utils/helpers'
+const getToken = () => localStorage.getItem('token')
 
 export default {
   test({ dataCategory, dataType }) {
@@ -10,5 +11,10 @@ export default {
   },
   signin({ formData }) {
     return apiHelper.post(`/users/signin`, formData)
+  },
+  getCurrentUser: () => {
+    return apiHelper.get('/get_current_user', {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   },
 }

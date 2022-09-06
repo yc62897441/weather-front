@@ -49,7 +49,10 @@ export default {
         }
 
         const response = await indexAPI.signin({ formData })
-        console.log('response', response)
+
+        // 登入驗證成功
+        // 儲存 token 到瀏覽器內 
+        localStorage.setItem('token', response.data.token)
 
         console.log('submitSignin')
       } catch (error) {
