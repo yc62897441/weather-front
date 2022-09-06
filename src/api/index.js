@@ -6,7 +6,9 @@ export default {
     return apiHelper.get(`/test?${searchParams.toString()}`)
   },
   signup({ formData }) {
-    console.log('signup formData', formData)
     return apiHelper.post(`/users/signup`, formData)
-  }
+  },
+  signin({ formData }) {
+    return apiHelper.post(`/users/signin`, formData)
+  },
 }
