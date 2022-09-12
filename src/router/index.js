@@ -27,6 +27,11 @@ const routes = [
     component: () => import('../views/Mountain.vue')
   },
   {
+    path: '/user/save',
+    name: 'usersave',
+    component: () => import('../views/UserSave.vue')
+  },
+  {
     path: '/signup',
     name: 'signup',
     component: () => import('../views/Signup.vue')

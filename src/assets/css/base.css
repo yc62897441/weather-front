@@ -203,6 +203,29 @@ table {
   flex: 1;
 }
 
+.table-cell-save {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+}
+
+.table-body .table-cell-save::after {
+  display: block;
+  width: 20px;
+  height: 20px;
+  background-color: #E9E9E9;
+  border: 2px solid #555555;
+  border-radius: 50%;
+  content: ' ';
+  cursor: pointer;
+}
+
+.table-body .table-cell-save.saved::after {
+  background-color: #77DD33;
+  border: 2px solid #BBBBBB;
+}
+
 .table-cell-name {
   width: 75px;
 }

@@ -32,7 +32,11 @@
     <div class="navbar-container-right">
       <div class="user-wrapper">
         <template v-if="isAuthenticated">
-          <div>蒐藏列表</div>
+          <div class="navbar-item">
+            <router-link class="link" to="/user/save">
+              蒐藏列表
+            </router-link>
+          </div>
           <div v-on:click="signout" class="btn btn-danger">登出</div>
         </template>
         <template v-else>
@@ -133,5 +137,11 @@ export default {
 .search-list-item {
   margin: 3px 0px;
   cursor: pointer;
+}
+
+.user-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 </style>

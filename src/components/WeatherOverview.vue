@@ -4,7 +4,8 @@
     <table class="main-table">
       <thead class="table-header">
         <tr class="table-row">
-          <th class="table-cell table-cell-name"></th>
+          <th class="table-cell table-cell-save" v-if="isAuthenticated">加入蒐藏</th>
+          <th class="table-cell table-cell-name">山岳</th>
           <th class="table-cell table-cell-each-day"
             v-for="time in propDatasetOneWeek.locations.location[0].weatherElement[3].time"
             v-bind:key="'date' + time.startTime">
@@ -21,6 +22,8 @@
       <tbody class="table-body">
         <tr class="table-row" v-for="locat in propDatasetOneWeek.locations.location"
           v-bind:key="locat.parameterSet.parameter.parameterValue">
+          <td class="table-cell table-cell-save saved" v-if="isAuthenticated"
+            v-on:click="removeFromUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
           <td class="table-cell table-cell-name">
             <router-link class="link" v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
               {{ locat.locationName }}
@@ -46,11 +49,38 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import indexAPI from '../api/index'
 
 export default {
   props: {
     propDatasetOneWeek: {
       type: Object
+    }
+  },
+  computed: {
+    ...mapState(['currentUser', 'isAuthenticated'])
+  },
+  methods: {
+    async addToUserSave(event, id) {
+      try {
+        event.target.classList.add('saved')
+        const formData = { MountainId: id }
+        const response = await indexAPI.addToUserSave({ formData })
+        console.log('response', response)
+      } catch (error) {
+        console.warn(error)
+      }
+    },
+    async removeFromUserSave(event, id) {
+      try {
+        event.target.classList.remove('saved')
+        const formData = { MountainId: id }
+        const response = await indexAPI.removeFromUserSave({ formData })
+        console.log('response', response)
+      } catch (error) {
+        console.warn(error)
+      }
     }
   }
 }

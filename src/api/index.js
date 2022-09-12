@@ -17,4 +17,14 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
+  addToUserSave({ formData }) {
+    return apiHelper.post(`/users/addToUserSave`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  removeFromUserSave({ formData }) {
+    return apiHelper.post(`/users/removeFromUserSave`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  }
 }
