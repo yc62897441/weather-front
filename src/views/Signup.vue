@@ -20,6 +20,9 @@
           <button type="button" class="btn btn-primary" v-on:click="submitSignup">Submit</button>
         </form>
       </div>
+      <div>
+        <router-link to="/signin"> 登入 </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -61,9 +64,9 @@ export default {
         }
 
         const response = await indexAPI.signup({ formData })
-        console.log('response', response)
 
-        console.log('submitSignup')
+        // 跳轉頁面，導入首頁
+        this.$router.push('/signin')
       } catch (error) {
         console.warn(error)
       }

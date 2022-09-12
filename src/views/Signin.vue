@@ -16,6 +16,9 @@
           <button type="button" class="btn btn-primary" v-on:click="submitSignin">Submit</button>
         </form>
       </div>
+      <div>
+        <router-link to="/signup"> 註冊 </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -54,7 +57,11 @@ export default {
         // 儲存 token 到瀏覽器內 
         localStorage.setItem('token', response.data.token)
 
-        console.log('submitSignin')
+        // 將 Vue 物件提交 mutation 事件，'setCurrentUser' 是在 mutations 定義好的 setCurrentUser
+        this.$store.commit('setCurrentUser', response.data.user)
+
+        // 跳轉頁面，導入首頁
+        this.$router.push('/')
       } catch (error) {
         console.warn(error)
       }
