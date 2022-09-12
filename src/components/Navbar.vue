@@ -1,35 +1,46 @@
 <template>
   <div class="navbar-container">
-    <div class="navbar-wrapper">
-      <div class="navbar-item">
-        <router-link class="link" to="/">
-          天氣總覽表
-        </router-link>
-      </div>
-      <div class="navbar-item">
-        <router-link class="link" to="/weatherFilter">
-          天氣條件檢索
-        </router-link>
-      </div>
-      <div class="navbar-item">
-        <router-link class="link" to="/weatherMap">
-          天氣地圖
-        </router-link>
-      </div>
-    </div>
-    <div class="search-wrapper">
-      <input type="text" placeholder="搜尋山岳" v-on:keyup.prevent.stop="searchMountain" v-model="input">
-      <template v-if="input">
-        <div class="search-list">
-          <div class="search-list-item" v-for="item in searchMountainList" v-bind:key="item.id">
-            <router-link class="link" v-bind:to="'/mountain/' + item.id"> {{ item.locationName }}</router-link>
-          </div>
+    <div class="navbar-container-left">
+      <div class="navbar-wrapper">
+        <div class="navbar-item">
+          <router-link class="link" to="/">
+            天氣總覽表
+          </router-link>
         </div>
-      </template>
+        <div class="navbar-item">
+          <router-link class="link" to="/weatherFilter">
+            天氣條件檢索
+          </router-link>
+        </div>
+        <div class="navbar-item">
+          <router-link class="link" to="/weatherMap">
+            天氣地圖
+          </router-link>
+        </div>
+      </div>
+      <div class="search-wrapper">
+        <input type="text" placeholder="搜尋山岳" v-on:keyup.prevent.stop="searchMountain" v-model="input">
+        <template v-if="input">
+          <div class="search-list">
+            <div class="search-list-item" v-for="item in searchMountainList" v-bind:key="item.id">
+              <router-link class="link" v-bind:to="'/mountain/' + item.id"> {{ item.locationName }}</router-link>
+            </div>
+          </div>
+        </template>
+      </div>
     </div>
-    <div class="user-wrapper">
-      <div v-if="isAuthenticated" v-on:click="signout" class="btn btn-danger">登出</div>
-      <div v-else  class="btn btn-success">登入/註冊</div>
+    <div class="navbar-container-right">
+      <div class="user-wrapper">
+        <template v-if="isAuthenticated">
+          <div>蒐藏列表</div>
+          <div v-on:click="signout" class="btn btn-danger">登出</div>
+        </template>
+        <template v-else>
+          <router-link to="/signin">
+            <div class="btn btn-success">登入or註冊</div>
+          </router-link>
+        </template>
+      </div>
     </div>
   </div>
 </template>
@@ -75,10 +86,24 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
-  height: 50px;
-  padding-left: 15px;
+  height: 60px;
   background-color: #EEEEEE;
+}
+
+.navbar-container-left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 15px;
+}
+
+.navbar-container-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-right: 15px;
 }
 
 .navbar-wrapper {
