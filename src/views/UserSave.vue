@@ -32,20 +32,11 @@ export default {
           location: []
         }
       },
-      datasetOneWeekDayNight: {
-        locations: {
-          location: []
-        }
-      },
-      datasetPerThreeHours: {
-        locations: {
-          location: []
-        }
-      }
+      userSave: []
     }
   },
   methods: {
-    async fetchDatasetOneWeek() {
+    async fetchDatasetOneWeekAndUserSave() {
       try {
         const dataCategory = this.dataCategory.oneWeek
         const dataType = this.dataType
@@ -53,8 +44,27 @@ export default {
         if (response.status !== 200) {
           throw new Error()
         }
+
+        const responseUserSave = await indexAPI.getUserSave()
+        if (responseUserSave.data.userSaves) {
+          responseUserSave.data.userSaves.forEach(item => {
+            this.userSave.push(item.MountainId)
+          })
+        }
+
+        const location = []
+        response.data.dataset.locations.location.forEach(item => {
+          if (this.userSave.includes(item.parameterSet.parameter.parameterValue)) {
+            location.push(item)
+          }
+        })
+
         this.datasetOneWeek = {
-          ...response.data.dataset
+          datasetInfo: response.data.dataset.datasetInfo,
+          locations: {
+            location: location,
+            locationsName: response.data.dataset.locations.locationsName
+          }
         }
       } catch (error) {
         console.warn(error)
@@ -62,7 +72,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchDatasetOneWeek()
+    this.fetchDatasetOneWeekAndUserSave()
   }
 }
 </script>

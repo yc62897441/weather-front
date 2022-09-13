@@ -17,6 +17,9 @@ export default {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
   },
+  getUserSave() {
+    return apiHelper.get('/users/userSave')
+  },
   addToUserSave({ formData }) {
     return apiHelper.post(`/users/addToUserSave`, formData, {
       headers: { Authorization: `Bearer ${getToken()}` }

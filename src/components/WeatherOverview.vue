@@ -22,8 +22,13 @@
       <tbody class="table-body">
         <tr class="table-row" v-for="locat in propDatasetOneWeek.locations.location"
           v-bind:key="locat.parameterSet.parameter.parameterValue">
-          <td class="table-cell table-cell-save saved" v-if="isAuthenticated"
-            v-on:click="removeFromUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
+          <template v-if="isAuthenticated">
+            <td class="table-cell table-cell-save saved"
+              v-if="userSave.includes(locat.parameterSet.parameter.parameterValue)"
+              v-on:click="removeFromUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
+            <td class="table-cell table-cell-save" v-else
+              v-on:click="addToUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
+          </template>
           <td class="table-cell table-cell-name">
             <router-link class="link" v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
               {{ locat.locationName }}
@@ -58,10 +63,27 @@ export default {
       type: Object
     }
   },
+  data() {
+    return {
+      userSave: []
+    }
+  },
   computed: {
     ...mapState(['currentUser', 'isAuthenticated'])
   },
   methods: {
+    async fetchUserSave() {
+      try {
+        const response = await indexAPI.getUserSave()
+        if (response.data.userSaves) {
+          response.data.userSaves.forEach(item => {
+            this.userSave.push(item.MountainId)
+          })
+        }
+      } catch (error) {
+        console.warn(error)
+      }
+    },
     async addToUserSave(event, id) {
       try {
         event.target.classList.add('saved')
@@ -82,6 +104,9 @@ export default {
         console.warn(error)
       }
     }
+  },
+  mounted() {
+    this.fetchUserSave()
   }
 }
 
