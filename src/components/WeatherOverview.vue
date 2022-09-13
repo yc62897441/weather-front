@@ -25,9 +25,9 @@
           <template v-if="isAuthenticated">
             <td class="table-cell table-cell-save saved"
               v-if="userSave.includes(locat.parameterSet.parameter.parameterValue)"
-              v-on:click="removeFromUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
+              v-on:click="removeFromUserSave(locat.parameterSet.parameter.parameterValue)"></td>
             <td class="table-cell table-cell-save" v-else
-              v-on:click="addToUserSave($event, locat.parameterSet.parameter.parameterValue)"></td>
+              v-on:click="addToUserSave(locat.parameterSet.parameter.parameterValue)"></td>
           </template>
           <td class="table-cell table-cell-name">
             <router-link class="link" v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
@@ -84,22 +84,24 @@ export default {
         console.warn(error)
       }
     },
-    async addToUserSave(event, id) {
+    async addToUserSave(id) {
       try {
-        event.target.classList.add('saved')
+        this.userSave.push(id)
         const formData = { MountainId: id }
         const response = await indexAPI.addToUserSave({ formData })
-        console.log('response', response)
       } catch (error) {
         console.warn(error)
       }
     },
-    async removeFromUserSave(event, id) {
+    async removeFromUserSave(id) {
       try {
-        event.target.classList.remove('saved')
+        this.userSave = this.userSave.map(item => {
+          if (item !== id) {
+            return item
+          }
+        })
         const formData = { MountainId: id }
         const response = await indexAPI.removeFromUserSave({ formData })
-        console.log('response', response)
       } catch (error) {
         console.warn(error)
       }
