@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <Navbar />
-    <WeatherOverview v-bind:propDatasetOneWeek="datasetOneWeek" />
+    <Spinner v-if="isLoading" />
+    <WeatherOverview v-else v-bind:propDatasetOneWeek="datasetOneWeek" />
     <Footer />
   </div>
 </template>
@@ -12,12 +13,14 @@ import indexAPI from '../api/index'
 import Navbar from '../components/Navbar.vue'
 import WeatherOverview from '../components/WeatherOverview.vue'
 import Footer from '../components/Footer.vue'
+import Spinner from '../components/Spinner'
 
 export default {
   components: {
     Navbar,
     WeatherOverview,
-    Footer
+    Footer,
+    Spinner
   },
   data() {
     return {
@@ -32,12 +35,14 @@ export default {
           location: []
         }
       },
-      userSave: []
+      userSave: [],
+      isLoading: true
     }
   },
   methods: {
     async fetchDatasetOneWeekAndUserSave() {
       try {
+        this.isLoading = true
         const dataCategory = this.dataCategory.oneWeek
         const dataType = this.dataType
         const response = await indexAPI.test({ dataCategory, dataType })
@@ -66,7 +71,9 @@ export default {
             locationsName: response.data.dataset.locations.locationsName
           }
         }
+        this.isLoading = false
       } catch (error) {
+        this.isLoading = false
         console.warn(error)
       }
     },

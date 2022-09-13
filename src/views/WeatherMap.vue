@@ -43,7 +43,7 @@ import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ';
 
 import Overlay from 'ol/Overlay'
-import {fromLonLat, toLonLat} from 'ol/proj';
+import { fromLonLat, toLonLat } from 'ol/proj';
 
 export default {
   components: {
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     initMap() {
-     const map = new Map({
+      const map = new Map({
         target: 'map',
         layers: [
           new TileLayer({
@@ -69,14 +69,14 @@ export default {
           zoom: 8,
         })
       })
-      
+
       this.datasetPerThreeHours.locations.location.forEach(locat => {
         this.markMountains(map, locat)
-      }) 
+      })
     },
     markMountains(map, locat) {
       const pos = fromLonLat([Number(locat.lon), Number(locat.lat)])
-      const router_link_id = 'MtId'+ locat.parameterSet.parameter.parameterValue
+      const router_link_id = 'MtId' + locat.parameterSet.parameter.parameterValue
       const mt_label = new Overlay({
         position: pos,
         element: document.getElementById(router_link_id)
