@@ -7,11 +7,11 @@
         <form>
           <div class=" mb-3">
             <label for="signin_account" class="form-label">Account</label>
-            <input type="text" class="form-control" id="signin_account" v-model="account">
+            <input type="text" class="form-control" id="signin_account" v-model="account" required>
           </div>
           <div class="mb-3">
             <label for="signin_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="signin_password" v-model="password">
+            <input type="password" class="form-control" id="signin_password" v-model="password" required>
           </div>
           <button type="button" class="btn btn-primary" v-on:click="submitSignin">Submit</button>
         </form>
@@ -26,6 +26,7 @@
 <script>
 import Navbar from '../components/Navbar.vue'
 import indexAPI from '../api/index'
+import { Toast } from '../utils/helpers'
 
 export default {
   components: {
@@ -41,8 +42,10 @@ export default {
     async submitSignin() {
       try {
         if (!this.account || !this.password) {
-          // do something
-          console.log('account、password 不可空白')
+          Toast.fire({
+            icon: 'warning',
+            title: 'Account、Password 不可空白'
+          })
           return
         }
 
@@ -52,6 +55,11 @@ export default {
         }
 
         const response = await indexAPI.signin({ formData })
+
+        if (response.data.status !== 'success') {
+          this.password = ''
+          throw new Error(response.data.message)
+        }
 
         // 登入驗證成功
         // 儲存 token 到瀏覽器內 
@@ -64,6 +72,10 @@ export default {
         this.$router.push('/')
       } catch (error) {
         console.warn(error)
+        Toast.fire({
+          icon: 'warning',
+          title: error
+        })
       }
     }
   }

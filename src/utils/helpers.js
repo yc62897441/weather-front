@@ -22,3 +22,13 @@ axiosInstance.interceptors.request.use(config => {
 }, error => Promise.reject(error))
 
 export const apiHelper = axiosInstance
+
+// sweetalert2
+import Swal from 'sweetalert2'
+export const Toast = Swal.mixin({
+  toast: true,
+  position: 'top',
+  showConfirmButton: true,
+  timer: 3000,
+  color: '#000000',
+})

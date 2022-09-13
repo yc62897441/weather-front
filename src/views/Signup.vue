@@ -7,15 +7,15 @@
         <form>
           <div class=" mb-3">
             <label for="signup_account" class="form-label">Account</label>
-            <input type="text" class="form-control" id="signup_account" v-model="account">
+            <input type="text" class="form-control" id="signup_account" v-model="account" required>
           </div>
           <div class="mb-3">
             <label for="signup_password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="signup_password" v-model="password">
+            <input type="password" class="form-control" id="signup_password" v-model="password" required>
           </div>
           <div class="mb-3">
             <label for="signup_password_confirm" class="form-label">Password Confirm</label>
-            <input type="password" class="form-control" id="signup_password_confirm" v-model="passwordConfirm">
+            <input type="password" class="form-control" id="signup_password_confirm" v-model="passwordConfirm" required>
           </div>
           <button type="button" class="btn btn-primary" v-on:click="submitSignup">Submit</button>
         </form>
@@ -30,6 +30,7 @@
 <script>
 import Navbar from '../components/Navbar.vue'
 import indexAPI from '../api/index'
+import { Toast } from '../utils/helpers'
 
 export default {
   components: {
@@ -46,13 +47,17 @@ export default {
     async submitSignup() {
       try {
         if (!this.account || !this.password || !this.passwordConfirm) {
-          // do something
-          console.log('account、password、passwordConfirm 不可空白')
+          Toast.fire({
+            icon: 'warning',
+            title: 'Account、Password、Password Confirm 不可空白'
+          })
           return
         }
         if (this.password !== this.passwordConfirm) {
-          // do something
-          console.log('Password、Password Confirm 不一致')
+          Toast.fire({
+            icon: 'warning',
+            title: 'Password、Password Confirm 不一致'
+          })
           this.password = ''
           this.passwordConfirm = ''
           return
@@ -65,10 +70,24 @@ export default {
 
         const response = await indexAPI.signup({ formData })
 
+        if (response.data.status !== 'success') {
+          this.password = ''
+          this.passwordConfirm = ''
+          throw new Error(response.data.message)
+        }
+
         // 跳轉頁面，導入首頁
         this.$router.push('/signin')
+        Toast.fire({
+          icon: 'success',
+          title: '註冊成功，請用新帳號登入'
+        })
       } catch (error) {
         console.warn(error)
+        Toast.fire({
+          icon: 'warning',
+          title: error
+        })
       }
     }
   }
