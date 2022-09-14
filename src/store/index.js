@@ -9,16 +9,11 @@ export default new Vuex.Store({
   state: {
     dataCategory: {
       oneWeek: 'F-B0053-031', //登山一週24小時天氣預報
-      oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
+      // oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
       perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
     },
     dataType: 'JSON',
     datasetOneWeek: {
-      locations: {
-        location: []
-      }
-    },
-    datasetOneWeekDayNight: {
       locations: {
         location: []
       }
@@ -74,7 +69,7 @@ export default new Vuex.Store({
       try {
         const dataCategory = store.state.dataCategory.oneWeek
         const dataType = store.state.dataType
-        const response = await indexAPI.test({ dataCategory, dataType })
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
         if (response.status !== 200) {
           throw new Error()
         }
@@ -92,7 +87,7 @@ export default new Vuex.Store({
       try {
         const dataCategory = store.state.dataCategory.perThreeHours
         const dataType = store.state.dataType
-        const response = await indexAPI.test({ dataCategory, dataType })
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
         if (response.status !== 200) {
           throw new Error()
         }

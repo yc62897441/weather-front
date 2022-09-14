@@ -45,7 +45,7 @@ export default {
         this.isLoading = true
         const dataCategory = this.dataCategory.oneWeek
         const dataType = this.dataType
-        const response = await indexAPI.test({ dataCategory, dataType })
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
         if (response.status !== 200) {
           throw new Error()
         }

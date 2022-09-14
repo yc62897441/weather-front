@@ -68,7 +68,6 @@ export default {
         this.searchMountainList = []
         this.datasetOneWeek.locations.location.map(locat => {
           if (locat.locationName.includes(this.input)) {
-            console.log(this.input, locat.locationName)
             this.searchMountainList.push({
               locationName: locat.locationName,
               id: locat.parameterSet.parameter.parameterValue

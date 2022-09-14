@@ -41,11 +41,11 @@ const routes = [
     name: 'signin',
     component: () => import('../views/Signin.vue')
   },
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue')
-  },
+  // {
+  //   path: '/test',
+  //   name: 'test',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue')
+  // },
   {
     path: '*',
     name: 'not-found',

@@ -2,9 +2,9 @@ import { apiHelper } from '../utils/helpers'
 const getToken = () => localStorage.getItem('token')
 
 export default {
-  test({ dataCategory, dataType }) {
+  getWeatherData({ dataCategory, dataType }) {
     const searchParams = new URLSearchParams({ dataCategory, dataType })
-    return apiHelper.get(`/test?${searchParams.toString()}`)
+    return apiHelper.get(`/weather_data?${searchParams.toString()}`)
   },
   signup({ formData }) {
     return apiHelper.post(`/users/signup`, formData)
