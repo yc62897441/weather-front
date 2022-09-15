@@ -5,6 +5,7 @@
       <thead class="table-header">
         <tr class="table-row">
           <th class="table-cell table-cell-save" v-if="isAuthenticated">加入蒐藏</th>
+          <th class="table-cell table-cell-notify" v-if="isAuthenticated">開啟通知</th>
           <th class="table-cell table-cell-name">山岳</th>
           <th class="table-cell table-cell-each-day"
             v-for="time in propDatasetOneWeek.locations.location[0].weatherElement[3].time"
@@ -29,6 +30,14 @@
             <td class="table-cell table-cell-save" v-else
               v-on:click="addToUserSave(locat.parameterSet.parameter.parameterValue)"></td>
           </template>
+          <template v-if="isAuthenticated">
+            <td class="table-cell table-cell-notify notified" data-bs-toggle="modal"
+              v-bind:data-bs-target="'#notificationModal'+locat.parameterSet.parameter.parameterValue"
+              v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"></td>
+            <td class="table-cell table-cell-notify" data-bs-toggle="modal"
+              v-bind:data-bs-target="'#notificationModal'+locat.parameterSet.parameter.parameterValue" v-else>
+            </td>
+          </template>
           <td class="table-cell table-cell-name">
             <router-link class="link" v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
               {{ locat.locationName }}
@@ -47,6 +56,45 @@
               </div>
             </div>
           </td>
+
+          <!-- Modal -->
+          <div class="modal fade" v-bind:id="'notificationModal'+locat.parameterSet.parameter.parameterValue"
+            tabindex="-1" aria-labelledby="notificationModal" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="notificationModal">天氣資訊即時通知</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <h2>{{ locat.locationName }}</h2>
+                  <div class="notifyConditions-wrapper">
+                    <h4>通知條件</h4>
+
+                    <label for="rainrate">未來6小時降雨機率>=</label>
+                    <input id="rainrate" type="number" min="0" max="100" v-model="notifyConditions.rainrate.value">
+
+                    <label for="temperature">未來3小時溫度>=</label>
+                    <input id="temperature" type="number" min="-10" max="50"
+                      v-model="notifyConditions.temperature.value">
+
+                    <label for="apparentTemperature">未來3小時體感溫度>=</label>
+                    <input id="apparentTemperature" type="number" min="-10" max="50"
+                      v-model="notifyConditions.apparentTemperature.value">
+
+                    <button type="button" class="btn btn-danger" v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"
+                      v-on:click="offNotify(locat.parameterSet.parameter.parameterValue)">關閉通知</button>
+                    <button type="button" class="btn btn-success" v-else
+                      v-on:click="onNotify(locat.parameterSet.parameter.parameterValue)">開啟通知</button>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          
         </tr>
       </tbody>
     </table>
@@ -65,7 +113,22 @@ export default {
   },
   data() {
     return {
-      userSave: []
+      userSave: [],
+      userNotificationMountainId: '',
+      notifyConditions: {
+        temperature: {
+          value: 30,
+          index: 0
+        },
+        apparentTemperature: {
+          value: 20,
+          index: 8
+        },
+        rainrate: {
+          value: 50,
+          index: 3
+        }
+      }
     }
   },
   computed: {
@@ -105,10 +168,53 @@ export default {
       } catch (error) {
         console.warn(error)
       }
-    }
+    },
+    async fetchUserNotification() {
+      try {
+        const response = await indexAPI.getUserNotification()
+        if (response.data.userNotification) {
+          this.userNotificationMountainId = response.data.userNotification.MountainId
+        }
+      } catch (error) {
+        console.warn(error)
+      }
+    },
+    async onNotify(id) {
+      try {
+        this.userNotificationMountainId = id
+        const formData = {
+          MountainId: id,
+          temperature: {
+            value: this.notifyConditions.temperature.value,
+            index: 0
+          },
+          apparentTemperature: {
+            value: this.notifyConditions.apparentTemperature.value,
+            index: 8
+          },
+          rainrate: {
+            value: this.notifyConditions.rainrate.value,
+            index: 3
+          }
+        }
+        const response = await indexAPI.onNotify({ formData })
+      } catch (error) {
+        console.warn(error)
+      }
+    },
+    async offNotify(id) {
+      try {
+        this.userNotificationMountainId = ''
+        const formData = { MountainId: id }
+        const response = await indexAPI.offNotify({ formData })
+      } catch (error) {
+        console.warn(error)
+      }
+    },
   },
   mounted() {
     this.fetchUserSave()
+    this.fetchUserNotification()
   }
 }
 
@@ -140,5 +246,15 @@ export default {
 .table-cell-each-day div div:nth-child(4) img {
   width: 30px;
   height: 30px;
+}
+
+.notifyConditions-wrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 200px;
+}
+
+.notifyConditions-wrapper input {
+  margin-bottom: 10px;
 }
 </style>

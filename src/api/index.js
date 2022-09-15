@@ -29,5 +29,18 @@ export default {
     return apiHelper.post(`/users/removeFromUserSave`, formData, {
       headers: { Authorization: `Bearer ${getToken()}` }
     })
+  },
+  getUserNotification() {
+    return apiHelper.get('/users/notification')
+  },
+  onNotify({ formData }) {
+    return apiHelper.post(`/users/onNotify`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
+  },
+  offNotify({ formData }) {
+    return apiHelper.post(`/users/offNotify`, formData, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    })
   }
 }

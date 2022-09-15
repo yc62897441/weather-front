@@ -203,14 +203,16 @@ table {
   flex: 1;
 }
 
-.table-cell-save {
+.table-cell-save,
+.table-cell-notify {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 40px;
 }
 
-.table-body .table-cell-save::after {
+.table-body .table-cell-save::after,
+.table-body .table-cell-notify::after {
   display: block;
   width: 20px;
   height: 20px;
@@ -223,6 +225,11 @@ table {
 
 .table-body .table-cell-save.saved::after {
   background-color: #77DD33;
+  border: 2px solid #BBBBBB;
+}
+
+.table-body .table-cell-notify.notified::after {
+  background-color: #ff4444;
   border: 2px solid #BBBBBB;
 }
 
