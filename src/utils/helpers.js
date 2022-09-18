@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let baseURL = ''
 if (process.env.NODE_ENV === 'production') {
-  // baseURL = 'https://ac-s3-simple-twitter.herokuapp.com/api/'
+  baseURL = 'https://side-project-weather-end.herokuapp.com/api'
 } else {
   baseURL = 'http://localhost:3000/api'
 }
