@@ -28,6 +28,7 @@ export default new Vuex.Store({
     currentUser: {
       id: -1,
       account: '',
+      LINE_USER_ID: null
     },
     token: '',
     isAuthenticated: false

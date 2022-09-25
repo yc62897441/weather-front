@@ -82,7 +82,8 @@
                     <input id="apparentTemperature" type="number" min="-10" max="50"
                       v-model="notifyConditions.apparentTemperature.value">
 
-                    <button type="button" class="btn btn-danger" v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"
+                    <button type="button" class="btn btn-danger"
+                      v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"
                       v-on:click="offNotify(locat.parameterSet.parameter.parameterValue)">關閉通知</button>
                     <button type="button" class="btn btn-success" v-else
                       v-on:click="onNotify(locat.parameterSet.parameter.parameterValue)">開啟通知</button>
@@ -94,7 +95,7 @@
               </div>
             </div>
           </div>
-          
+
         </tr>
       </tbody>
     </table>
@@ -181,6 +182,12 @@ export default {
     },
     async onNotify(id) {
       try {
+        // 如果沒有使用者的 LINE_USER_ID，開啟分頁讓使用者登入 LINE，後端即可儲存使用者的 LINE_USER_ID
+        if (!this.currentUser.LINE_USER_ID) {
+          let href = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657482181&redirect_uri=https://side-project-weather-end.herokuapp.com/api/auth/line/callback&state=${this.currentUser.account}&scope=profile%20openid`
+          window.open(href, '_blank')
+        }
+
         this.userNotificationMountainId = id
         const formData = {
           MountainId: id,
