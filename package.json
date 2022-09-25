@@ -12,6 +12,8 @@
     "bootstrap": "^5.2.0",
     "core-js": "^3.8.3",
     "ol": "^7.1.0",
+    "passport": "^0.6.0",
+    "passport-line": "^0.0.4",
     "sweetalert2": "^11.4.32",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",

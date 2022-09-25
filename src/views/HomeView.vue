@@ -14,6 +14,7 @@ import Navbar from '../components/Navbar.vue'
 import WeatherOverview from '../components/WeatherOverview.vue'
 import Footer from '../components/Footer.vue'
 import Spinner from '../components/Spinner'
+import { Toast } from '../utils/helpers'
 
 export default {
   components: {
@@ -60,6 +61,20 @@ export default {
   },
   mounted() {
     this.fetchDatasetOneWeek()
+
+    // Line Login 後顯示通知，是否成功向 Line platform 取得 line user 資料並存到後端資料庫中 
+    if (this.$route.query.success_message) {
+      Toast.fire({
+        icon: 'success',
+        title: `${this.$route.query.success_message}`
+      })
+    }
+    if (this.$route.query.error_message) {
+      Toast.fire({
+        icon: 'error',
+        title: `${this.$route.query.error_message}`
+      })
+    }
   }
 }
 </script>
