@@ -88,6 +88,12 @@
                     <button type="button" class="btn btn-success" v-else
                       v-on:click="onNotify(locat.parameterSet.parameter.parameterValue)">開啟通知</button>
                   </div>
+                  <div class="line-channel-wrapper">
+                    <h5> 完成 Line Login 後請掃描加入好友 </h5>
+                    <div class="line-channel-image-wrapper">
+                      <img src="../assets/line_channel_qrcode.png">
+                    </div>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -263,5 +269,23 @@ export default {
 
 .notifyConditions-wrapper input {
   margin-bottom: 10px;
+}
+
+.line-channel-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.line-channel-image-wrapper {
+  min-width: 250px;
+  min-height: 250px;
+}
+
+.line-channel-image-wrapper img {
+  max-width: 250px;
+  max-height: 250px;
+  object-fit: cover;
 }
 </style>
