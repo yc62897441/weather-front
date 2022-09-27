@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar class="navbar"/>
     <template>
       <div class="not-found-wrapper">
         <h1>
@@ -8,7 +8,7 @@
         </h1>
       </div>
     </template>
-    <Footer />
+    <Footer class="footer"/>
   </div>
 </template>
 

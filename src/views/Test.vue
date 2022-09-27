@@ -80,21 +80,6 @@ export default {
 </script>
 
 <style>
-.navbar {
-  position: fixed;
-}
-
-.WeatherOverview {
-  height: calc(100%);
-  padding-top: 80px;
-  padding-bottom: 80px;
-}
-
-.footer {
-  position: fixed;
-  bottom: 0px;
-}
-
 /* Small devices (landscape phones, 576px and up) */
 @media (min-width: 576px) {
   

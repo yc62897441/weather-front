@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar class="navbar"/>
     <h1>signin</h1>
     <div class="main-container">
       <div class="signin_form_container">

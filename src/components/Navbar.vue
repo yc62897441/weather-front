@@ -99,7 +99,7 @@ export default {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 100vw;
   height: 60px;
   background-color: #EEEEEE;
 }
@@ -115,7 +115,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-right: 15px;
+  padding-right: 30px;
 }
 
 .navbar-toggle {
@@ -170,7 +170,7 @@ export default {
 
 .search-wrapper .form-control {
   width: 200px;
-  
+
 }
 
 .search-list {

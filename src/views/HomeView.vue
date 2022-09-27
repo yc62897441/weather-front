@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar class="navbar" />
     <Spinner v-if="isLoading" />
-    <WeatherOverview v-else v-bind:propDatasetOneWeek="datasetOneWeek" />
-    <Footer />
+    <WeatherOverview class="WeatherOverview" v-else v-bind:propDatasetOneWeek="datasetOneWeek" />
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -78,3 +78,9 @@ export default {
   }
 }
 </script>
+
+<style>
+.WeatherOverview {
+  padding: 80px 0px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar class="navbar"/>
     <div class="main-container main-container-mountain">
       <h1>{{ mountainOneWeek.locationName }}</h1>
 
@@ -100,7 +100,7 @@
       </div>
 
     </div>
-    <Footer />
+    <Footer class="footer"/>
   </div>
 </template>
 

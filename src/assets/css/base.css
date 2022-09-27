@@ -153,8 +153,21 @@ table {
 
 .home {}
 
+.navbar {
+  position: fixed;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+}
+
+.WeatherOverview {
+  padding-top: 80px;
+}
+
 .main-container {
-  padding: 15px;
+  padding: 80px 15px;
 }
 
 /* 表格相關 */

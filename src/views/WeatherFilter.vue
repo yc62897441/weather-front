@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar />
+    <Navbar class="navbar"/>
     <template>
       <div class="main-container main-container-weatherfilter">
         <h1>天氣條件檢索</h1>
@@ -79,7 +79,7 @@
 
       </div>
     </template>
-    <Footer />
+    <Footer class="footer"/>
   </div>
 </template>
 
