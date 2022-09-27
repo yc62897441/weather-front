@@ -1,6 +1,7 @@
 <template>
   <div class="navbar-container">
     <div class="navbar-container-left">
+      <input type="checkbox" class="navbar-toggle" id="navbar-toggle">
       <div class="navbar-wrapper">
         <div class="navbar-item">
           <router-link class="link" to="/">
@@ -17,6 +18,11 @@
             天氣地圖
           </router-link>
         </div>
+      </div>
+      <div class="burger-bar-wrapper">
+        <label class="navbar-toggle-label" for="navbar-toggle">
+          <img src="../assets/burger-bar.png" alt="">
+        </label>
       </div>
       <div class="search-wrapper">
         <input type="text" placeholder="搜尋山岳" v-on:keyup.prevent.stop="searchMountain" v-model="input">
@@ -109,14 +115,47 @@ export default {
   padding-right: 15px;
 }
 
+.navbar-toggle {
+  /*不佔空間*/
+  position: absolute;
+  visibility: hidden;
+  display: none;
+}
+
+.navbar-toggle:checked~.navbar-wrapper {
+  transform: scale(1, 1);
+  transition: opacity 0.2s ease-out 0.15s;
+  opacity: 1;
+}
+
 .navbar-wrapper {
+  position: absolute;
+  top: 100%;
+  left: 0%;
   display: flex;
   flex-direction: row;
   align-items: center;
+  width: 100%;
+  height: 40px;
+  padding-left: 15px;
+  background-color: #EEEEEE;
+  z-index: 999;
+
+  /*  轉場動畫  */
+  transform: scale(1, 0);
+  transform-origin: top;
+  transition: transform 0.3s ease-out;
+  opacity: 0;
 }
 
 .navbar-item {
   margin-right: 1rem;
+}
+
+.burger-bar-wrapper img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
 }
 
 .search-wrapper {
@@ -143,4 +182,32 @@ export default {
   flex-direction: row;
   align-items: center;
 }
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .navbar-wrapper {
+    position: relative;
+    /*  轉場動畫  */
+    transform: scale(1, 1);
+    transform-origin: top;
+    transition: transform 0.3s ease-out;
+    opacity: 1;
+  }
+
+  .burger-bar-wrapper img {
+    /*不佔空間*/
+    position: absolute;
+    visibility: hidden;
+    display: none;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
 </style>
