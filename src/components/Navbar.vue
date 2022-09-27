@@ -25,7 +25,10 @@
         </label>
       </div>
       <div class="search-wrapper">
-        <input type="text" placeholder="搜尋山岳" v-on:keyup.prevent.stop="searchMountain" v-model="input">
+        <form>
+          <input class="form-control" type="text" placeholder="搜尋山岳" aria-label="Search"
+            v-on:keyup.prevent.stop="searchMountain" v-model="input">
+        </form>
         <template v-if="input">
           <div class="search-list">
             <div class="search-list-item" v-for="item in searchMountainList" v-bind:key="item.id">
@@ -162,18 +165,27 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
+  padding: 0px 5px;
+}
+
+.search-wrapper .form-control {
+  width: 200px;
+  
 }
 
 .search-list {
   position: absolute;
-  top: 20px;
+  top: 35px;
+  width: 200px;
   z-index: 999;
-  border: 2px solid firebrick;
-  background-color: azure;
+  padding: 3px 12px;
+  border: 2px solid rgb(34, 92, 178);
+  border-radius: 5px;
+  background-color: #FFFFFF;
 }
 
 .search-list-item {
-  margin: 3px 0px;
+  margin: 8px 0px;
   cursor: pointer;
 }
 
