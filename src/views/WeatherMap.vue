@@ -1,9 +1,11 @@
 <template>
   <div class="home">
-    <Navbar class="navbar"/>
+    <Navbar class="navbar" />
     <template>
       <div class="main-container main-container-weathermap">
-        <h1>天氣地圖</h1>
+        <div class="title-wrapper">
+          <h1>天氣地圖</h1>
+        </div>
         <div id="map"></div>
         <div class="mark_mountain_wrapper" v-for="locat in datasetPerThreeHours.locations.location"
           v-bind:key="locat.parameterSet.parameter.parameterValue">
@@ -28,7 +30,7 @@
         </div>
       </div>
     </template>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -94,13 +96,19 @@ export default {
 </script>
 
 <style>
+.title-wrapper {
+  width: 250px;
+  margin: 0px auto;
+}
+
 #map {
   display: block;
   /* position: absolute;
   top: 100px;
   bottom: 0; */
-  width: 1200px;
-  height: 800px;
+  width: 250px;
+  height: 450px;
+  margin: 0px auto;
 }
 
 .mark_mountain_wrapper {
@@ -149,5 +157,48 @@ export default {
 .mark_mountain_info_Wx img {
   width: 40px;
   height: 40px;
+}
+
+@media (min-width: 375px) {
+  .title-wrapper {
+    width: 350px;
+  }
+
+  #map {
+    width: 350px;
+    height: 600px;
+  }
+}
+
+@media (min-width: 576px) {
+  .title-wrapper {
+    width: 550px;
+  }
+
+  #map {
+    width: 550px;
+    height: 700px;
+  }
+}
+
+@media (min-width: 768px) {
+  .title-wrapper {
+    width: 730px;
+  }
+
+  #map {
+    width: 730px;
+    height: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .title-wrapper {
+    width: 950px;
+  }
+
+  #map {
+    width: 950px;
+  }
 }
 </style>
