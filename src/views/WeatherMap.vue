@@ -96,6 +96,10 @@ export default {
 </script>
 
 <style>
+.main-container-weathermap {
+  overflow: hidden;
+}
+
 .title-wrapper {
   width: 250px;
   margin: 0px auto;
@@ -111,25 +115,22 @@ export default {
   margin: 0px auto;
 }
 
-.mark_mountain_wrapper {
-  margin: 10px 0px;
-}
-
 .mark_mountain_info_wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4px 4px 2px;
+  padding: 4px 4px 1px;
   border: 1px solid rgb(85, 85, 85, 0.5);
   border-radius: 5px;
   text-decoration: none;
   color: rgb(0, 0, 0);
-  font-size: 1rem;
+  font-size: 0.7rem;
   background-color: rgb(255, 255, 255, 0.75);
 }
 
 .mark_mountain_info_name {
+  margin-bottom: 2px;
   font-weight: 700;
 }
 
@@ -149,14 +150,10 @@ export default {
   font-weight: 400;
 }
 
-.mark_mountain_info_Wx {
-  width: 40px;
-  height: 40px;
-}
-
 .mark_mountain_info_Wx img {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
+  object-fit: cover;
 }
 
 @media (min-width: 375px) {
@@ -167,6 +164,11 @@ export default {
   #map {
     width: 350px;
     height: 600px;
+  }
+
+  .mark_mountain_info_wrapper {
+    padding: 4px 4px 2px;
+    font-size: 0.8rem;
   }
 }
 
@@ -179,6 +181,16 @@ export default {
     width: 550px;
     height: 700px;
   }
+
+  .mark_mountain_info_wrapper {
+    padding: 5px 5px 2px;
+    font-size: 1rem;
+  }
+
+  .mark_mountain_info_Wx img {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 @media (min-width: 768px) {
@@ -189,6 +201,11 @@ export default {
   #map {
     width: 730px;
     height: 750px;
+  }
+
+  .mark_mountain_info_Wx img {
+    width: 35px;
+    height: 35px;
   }
 }
 
