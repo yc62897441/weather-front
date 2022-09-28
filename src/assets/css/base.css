@@ -155,19 +155,22 @@ table {
 
 .navbar {
   position: fixed;
+  width: 100vw;
+  z-index: 999;
 }
 
 .footer {
   position: fixed;
   bottom: 0px;
-}
-
-.WeatherOverview {
-  padding-top: 80px;
+  width: 100vw;
+  z-index: 999;
 }
 
 .main-container {
-  padding: 80px 15px;
+  width: 100vw;
+  overflow: scroll;
+  padding: 80px 15px 0px;
+  margin-bottom: 95px;
 }
 
 /* 表格相關 */
@@ -186,8 +189,6 @@ table {
 .table-body {
   /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
   display: block;
-  max-height: 100%;
-  overflow: scroll;
 }
 
 .table-row {
@@ -257,4 +258,14 @@ table {
 /* 連結相關 */
 .link {
   text-decoration: none;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 576px) {
+  /* 手機上不太會有 scroll bar 所以不用設定高度，一直往下滑、或左右滑就可。但電腦版會有 scroll bar，如果沒有設定 max-height，那麼左右橫移的 scroll bar 會在最下面，要滑鼠滾輪滾到對底才找的到，不好操作，甚至讓人找不到 */
+  .table-body {
+    /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
+    max-height: 680px;
+    overflow: scroll;
+  }
 }

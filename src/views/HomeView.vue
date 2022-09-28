@@ -80,7 +80,4 @@ export default {
 </script>
 
 <style>
-.WeatherOverview {
-  padding: 80px 0px;
-}
 </style>

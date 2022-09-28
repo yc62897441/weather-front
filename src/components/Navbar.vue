@@ -115,7 +115,7 @@ export default {
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-right: 30px;
+  padding-right: 15px;
 }
 
 .navbar-toggle {
@@ -152,7 +152,7 @@ export default {
 }
 
 .navbar-item {
-  margin-right: 1rem;
+  margin-right: 6px;
 }
 
 .burger-bar-wrapper img {
@@ -169,8 +169,7 @@ export default {
 }
 
 .search-wrapper .form-control {
-  width: 200px;
-
+  width: 110px;
 }
 
 .search-list {
@@ -195,8 +194,45 @@ export default {
   align-items: center;
 }
 
+.user-wrapper .navbar-item {
+  max-width: 40px;
+  margin-right: 3px;
+}
+
+.user-wrapper .btn {
+  padding: 2px 3px;
+}
+
+/* Small devices (landscape phones, 374px and down) */
+@media (min-width: 375px) {
+  .search-wrapper .form-control {
+    width: 145px;
+  }
+}
+
 /* Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+  .navbar-container-right {
+    padding-right: 30px;
+  }
+
+  .search-wrapper .form-control {
+    width: 175px;
+  }
+
+  .navbar-item {
+    margin-right: 1rem;
+  }
+
+  .user-wrapper .navbar-item {
+    max-width: 80px;
+    margin-right: 1rem;
+  }
+
+  .user-wrapper .btn {
+    padding: 6px 9px;
+  }
+}
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -214,6 +250,10 @@ export default {
     position: absolute;
     visibility: hidden;
     display: none;
+  }
+
+  .search-wrapper .form-control {
+    width: 200px;
   }
 }
 
