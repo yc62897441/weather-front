@@ -65,25 +65,33 @@
             <div class="modal-dialog">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="notificationModal">天氣資訊即時通知</h5>
+                  <div class="subtitle-wrapper">
+                    <h6 class="modal-title" id="notificationModal">天氣資訊即時通知</h6>
+                  </div>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  <h2>{{ locat.locationName }}</h2>
-                  <div class="notifyConditions-wrapper">
-                    <h4>通知條件</h4>
+                  <div class="subtitle-wrapper">
+                    <h6>{{ locat.locationName }}</h6>
+                  </div>
+                  <div class="notify-control-wrapper">
+                    <form class="notifyConditions-wrapper">
+                      <div class="subtitle-wrapper">
+                        <h6>通知條件</h6>
+                      </div>
 
-                    <label for="rainrate">未來6小時降雨機率>=</label>
-                    <input id="rainrate" type="number" min="0" max="100" v-model="notifyConditions.rainrate.value">
+                      <label class="form-label" for="rainrate">未來6小時降雨機率(大於等於)</label>
+                      <input class="form-control" id="rainrate" type="number" min="0" max="100"
+                        v-model="notifyConditions.rainrate.value">
 
-                    <label for="temperature">未來3小時溫度>=</label>
-                    <input id="temperature" type="number" min="-10" max="50"
-                      v-model="notifyConditions.temperature.value">
+                      <label class="form-label" for="temperature">未來3小時溫度(大於等於)</label>
+                      <input class="form-control" id="temperature" type="number" min="-10" max="50"
+                        v-model="notifyConditions.temperature.value">
 
-                    <label for="apparentTemperature">未來3小時體感溫度>=</label>
-                    <input id="apparentTemperature" type="number" min="-10" max="50"
-                      v-model="notifyConditions.apparentTemperature.value">
-
+                      <label class="form-label" for="apparentTemperature">未來3小時體感溫度(大於等於)</label>
+                      <input class="form-control" id="apparentTemperature" type="number" min="-10" max="50"
+                        v-model="notifyConditions.apparentTemperature.value">
+                    </form>
                     <button type="button" class="btn btn-danger"
                       v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"
                       v-on:click="offNotify(locat.parameterSet.parameter.parameterValue)">關閉通知</button>
@@ -91,7 +99,10 @@
                       v-on:click="onNotify(locat.parameterSet.parameter.parameterValue)">開啟通知</button>
                   </div>
                   <div class="line-channel-wrapper">
-                    <h5> 完成 Line Login 後請掃描加入好友 </h5>
+                    <div class="subtitle-wrapper">
+                      <h5>1.點擊「開啟通知」，完成 Line Login</h5>
+                      <h5>2.掃描「QR-code」加入 Line「天氣通知」好友</h5>
+                    </div>
                     <div class="line-channel-image-wrapper">
                       <img src="../assets/line_channel_qrcode.png">
                     </div>
@@ -270,31 +281,109 @@ export default {
   height: 30px;
 }
 
+/* modal 樣式*/
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.subtitle-wrapper {
+  padding-bottom: 3px;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.notify-control-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 220px;
+  margin: 0px auto;
+}
+
 .notifyConditions-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 200px;
+  width: 100%;
+}
+
+.notifyConditions-wrapper label {
+  margin-bottom: 3px;
 }
 
 .notifyConditions-wrapper input {
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .line-channel-wrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin-top: 20px;
 }
 
+.line-channel-wrapper .subtitle-wrapper {
+  width: 250px;
+  margin: 0px auto;
+  line-height: 20px;
+}
+
+.notify-control-wrapper .btn {
+  width: 75px;
+  padding: 2px 3px;
+}
+
 .line-channel-image-wrapper {
-  min-width: 250px;
-  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px auto;
 }
 
 .line-channel-image-wrapper img {
-  max-width: 250px;
-  max-height: 250px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+
+  /* modal 樣式*/
+  .subtitle-wrapper {
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .notify-control-wrapper {
+    width: 400px;
+  }
+
+  .notifyConditions-wrapper label {
+    margin-bottom: 5px;
+  }
+
+  .notifyConditions-wrapper input {
+    margin-bottom: 12px;
+  }
+
+  .notify-control-wrapper .btn {
+    width: 150px;
+    padding: 4px 6px;
+  }
+
+  .line-channel-wrapper .subtitle-wrapper {
+    width: 400px;
+    line-height: 24px;
+  }
+
+  .line-channel-image-wrapper img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+  }
 }
 </style>
