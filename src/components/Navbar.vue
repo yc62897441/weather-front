@@ -175,7 +175,7 @@ export default {
 .search-list {
   position: absolute;
   top: 35px;
-  width: 200px;
+  width: 110px;
   z-index: 999;
   padding: 3px 12px;
   border: 2px solid rgb(34, 92, 178);
@@ -208,6 +208,10 @@ export default {
   .search-wrapper .form-control {
     width: 145px;
   }
+
+  .search-list {
+    width: 145px;
+  }
 }
 
 /* Small devices (landscape phones, 576px and up) */
@@ -217,6 +221,10 @@ export default {
   }
 
   .search-wrapper .form-control {
+    width: 175px;
+  }
+
+  .search-list {
     width: 175px;
   }
 
@@ -253,6 +261,10 @@ export default {
   }
 
   .search-wrapper .form-control {
+    width: 200px;
+  }
+
+  .search-list {
     width: 200px;
   }
 }

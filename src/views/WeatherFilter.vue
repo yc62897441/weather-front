@@ -22,15 +22,15 @@
               </div>
             </div>
 
-            <label class="form-label" for="highestTemperature">最高溫</label>
+            <label class="form-label" for="highestTemperature">最高溫(小於等於)</label>
             <input class="form-control" id="highestTemperature" type="number" min="-20" max="50"
               v-model="filterConditions.highestTemperature.value">
 
-            <label class="form-label" for="lowestTemperature">最低溫</label>
+            <label class="form-label" for="lowestTemperature">最低溫(大於等於)</label>
             <input class="form-control" id="lowestTemperature" type="number" min="-20" max="50"
               v-model="filterConditions.lowestTemperature.value">
 
-            <label class="form-label" for="rainrate">降雨機率</label>
+            <label class="form-label" for="rainrate">降雨機率(小於等於)</label>
             <input class="form-control" id="rainrate" type="number" min="0" max="100"
               v-model="filterConditions.rainrate.value">
           </form>

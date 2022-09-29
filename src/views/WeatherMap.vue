@@ -53,7 +53,7 @@ export default {
     Footer
   },
   computed: {
-    ...mapState(['datasetOneWeek', 'datasetPerThreeHours'])
+    ...mapState(['datasetPerThreeHours'])
   },
   methods: {
     initMap() {
@@ -85,11 +85,14 @@ export default {
       })
       map.addOverlay(mt_label)
     },
-    aa() {
-      // 校正奇萊南峰位置
+    adjust() {
+      // 校正奇萊南峰位置(氣象局的座標跟南華山(能高北峰)重複)
+      this.datasetPerThreeHours.locations.location[46].lat = '24.066'
+      this.datasetPerThreeHours.locations.location[46].lon = '121.280036765'
     }
   },
   mounted() {
+    this.adjust()
     this.initMap()
   }
 }

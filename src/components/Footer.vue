@@ -1,7 +1,9 @@
 <template>
   <div class="footer-container">
     <h6>特別感謝資料來源：氣象資料開放平台</h6>
-    <h6>https://opendata.cwb.gov.tw/dataset/forecast</h6>
+    <a href="https://opendata.cwb.gov.tw/dataset/forecast">
+      <h6>https://opendata.cwb.gov.tw/dataset/forecast</h6>
+    </a>
   </div>
 </template>
 
