@@ -2,7 +2,7 @@
   <div class="home">
     <Navbar class="navbar" />
     <template>
-      <div class="main-container main-container-weatherfilter">
+      <div class="main-container main-container-weatherfilter overflow-default-hidden">
         <div class="title-wrapper">
           <h1>天氣條件檢索</h1>
         </div>
@@ -127,6 +127,9 @@ export default {
         title: '檢索中'
       })
 
+      // main-container 的 overflow 切換回 scroll 設定
+      this.removeOverflowHidden()
+
       this.filterMountains = []
       let date = this.filterConditions.date
       // 最高溫 <= 最高溫篩選值 && 最低溫 >= 最低溫篩選值 && 降雨機率 <= 降雨機率篩選值
@@ -148,13 +151,27 @@ export default {
           title: '檢索完成'
         })
       }
+    },
+    // 在 css 檔有設定 .main-container overflow: scroll; 就算還沒檢所出資料，畫面也會有一條卷軸，不好看，所以先隱藏起來。等到開始檢索時再還原成 overflow: scroll;
+    removeOverflowHidden() {
+      const mainContainerWeatherfilter = document.querySelector('.main-container-weatherfilter')
+      mainContainerWeatherfilter.classList.remove('overflow-default-hidden')
+      mainContainerWeatherfilter.classList.add('overflow-scroll')
     }
   },
 }
 </script>
 
 <style>
-/* 整個 filter-control-wrapper 的版、背景美觀 + input 美觀*/
+/* 在 css 檔有設定 .main-container overflow: scroll; 就算還沒檢所出資料，畫面也會有一條卷軸，不好看，所以先隱藏起來。等到開始檢索時再還原成 overflow: scroll; */
+.overflow-default-hidden {
+  overflow: hidden;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
 .main-container-weatherfilter .title-wrapper {
   display: block;
   width: 200px;
