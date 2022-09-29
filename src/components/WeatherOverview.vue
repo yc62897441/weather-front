@@ -1,7 +1,7 @@
 <template>
   <div class="main-container main-container-weatheroverview">
     <div class="title-wrapper">
-      <h1>天氣總覽</h1>
+      <h1>{{pageTitle}}</h1>
     </div>
     <table class="main-table">
       <thead class="table-header">
@@ -122,6 +122,7 @@ export default {
   },
   data() {
     return {
+      pageTitle: '天氣總覽',
       userSave: [],
       userNotificationMountainId: '',
       notifyConditions: {
@@ -228,6 +229,12 @@ export default {
     },
   },
   mounted() {
+    if (this.$route.name === 'home') {
+      this.pageTitle = '天氣總覽'
+    } else if (this.$route.name === 'usersave') {
+      this.pageTitle = '蒐藏列表'
+    }
+
     this.fetchUserSave()
     this.fetchUserNotification()
   }

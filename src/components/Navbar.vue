@@ -5,7 +5,7 @@
       <div class="navbar-wrapper">
         <div class="navbar-item">
           <router-link class="link" to="/">
-            天氣總覽表
+            天氣總覽
           </router-link>
         </div>
         <div class="navbar-item">
@@ -15,7 +15,7 @@
         </div>
         <div class="navbar-item">
           <router-link class="link" to="/weatherMap">
-            天氣地圖
+            山岳地圖
           </router-link>
         </div>
       </div>

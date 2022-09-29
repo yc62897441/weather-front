@@ -4,7 +4,7 @@
     <template>
       <div class="main-container main-container-weathermap">
         <div class="title-wrapper">
-          <h1>天氣地圖</h1>
+          <h1>山岳地圖</h1>
         </div>
         <div id="map"></div>
         <div class="mark_mountain_wrapper" v-for="locat in datasetPerThreeHours.locations.location"
