@@ -1,11 +1,15 @@
 <template>
   <div class="home">
-    <Navbar class="navbar"/>
+    <Navbar class="navbar" />
     <div class="main-container main-container-mountain">
-      <h1>{{ mountainOneWeek.locationName }}</h1>
+      <div class="title-wrapper">
+        <h1>{{ mountainOneWeek.locationName }}</h1>
+      </div>
 
       <div>
-        <h2>一周預報</h2>
+        <div class="subtitle-wrapper">
+          <h2>一周預報</h2>
+        </div>
         <table class="main-table">
           <thead class="table-header">
             <tr class="table-row">
@@ -35,8 +39,8 @@
                 <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
                   <div>
                     <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
-                      1].elementValue.value
-                      }}</div>
+                    1].elementValue.value
+                    }}</div>
                   </div>
                 </td>
               </template>
@@ -45,8 +49,12 @@
         </table>
       </div>
 
+      <br>
+
       <div>
-        <h2>每3小時預報</h2>
+        <div class="subtitle-wrapper">
+          <h2>每3小時預報</h2>
+        </div>
         <table class="main-table">
           <thead class="table-header">
             <tr class="table-row">
@@ -100,7 +108,7 @@
       </div>
 
     </div>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -229,6 +237,11 @@ export default {
 }
 </script>
 <style>
+.subtitle-wrapper {
+  padding-bottom: 3px;
+  font-size: 1rem;
+  font-weight: 700;
+}
 
 .mountain-table-body {
   /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
@@ -255,8 +268,17 @@ export default {
   width: 480px;
 }
 
-.mountain-table-cell-each-day_info_Wx img{
- width: 80px;
- height: 80px;
+.mountain-table-cell-each-day_info_Wx img {
+  width: 80px;
+  height: 80px;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 576px) {
+  .subtitle-wrapper {
+    padding-bottom: 5px;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
 }
 </style>

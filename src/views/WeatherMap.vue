@@ -100,7 +100,7 @@ export default {
   overflow: hidden;
 }
 
-.title-wrapper {
+.main-container-weathermap .title-wrapper {
   width: 250px;
   margin: 0px auto;
 }
@@ -157,7 +157,7 @@ export default {
 }
 
 @media (min-width: 375px) {
-  .title-wrapper {
+  .main-container-weathermap .title-wrapper {
     width: 350px;
   }
 
@@ -173,7 +173,7 @@ export default {
 }
 
 @media (min-width: 576px) {
-  .title-wrapper {
+  .main-container-weathermap .title-wrapper {
     width: 550px;
   }
 
@@ -194,7 +194,7 @@ export default {
 }
 
 @media (min-width: 768px) {
-  .title-wrapper {
+  .main-container-weathermap .title-wrapper {
     width: 730px;
   }
 
@@ -210,7 +210,7 @@ export default {
 }
 
 @media (min-width: 992px) {
-  .title-wrapper {
+  .main-container-weathermap .title-wrapper {
     width: 950px;
   }
 

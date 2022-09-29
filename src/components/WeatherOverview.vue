@@ -1,6 +1,8 @@
 <template>
   <div class="main-container main-container-weatheroverview">
-    <h1>天氣總覽</h1>
+    <div class="title-wrapper">
+      <h1>天氣總覽</h1>
+    </div>
     <table class="main-table">
       <thead class="table-header">
         <tr class="table-row">

@@ -173,6 +173,12 @@ table {
   margin-bottom: 95px;
 }
 
+.title-wrapper {
+  padding-bottom: 5px;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
 /* 表格相關 */
 .main-table {
   background-color: #FBFBFB;
@@ -262,6 +268,12 @@ table {
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 576px) {
+  .title-wrapper {
+    padding-bottom: 10px;
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
   /* 手機上不太會有 scroll bar 所以不用設定高度，一直往下滑、或左右滑就可。但電腦版會有 scroll bar，如果沒有設定 max-height，那麼左右橫移的 scroll bar 會在最下面，要滑鼠滾輪滾到對底才找的到，不好操作，甚至讓人找不到 */
   .table-body {
     /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/

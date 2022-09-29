@@ -1,15 +1,17 @@
 <template>
   <div class="home">
-    <Navbar class="navbar"/>
+    <Navbar class="navbar" />
     <template>
       <div class="main-container main-container-weatherfilter">
-        <h1>天氣條件檢索</h1>
-        <div>
-          <div class="filterConditions-wrapper">
+        <div class="title-wrapper">
+          <h1>天氣條件檢索</h1>
+        </div>
+        <div class="filter-control-wrapper">
+          <form class="filterConditions-wrapper">
             <div class="form-row">
-              <label>日期</label>
+              <label class="form-label">日期</label>
               <div class="select-wrapper">
-                <select name="a-type" id="a-type" v-model="filterConditions.date" required>
+                <select class="form-select" name="a-type" id="a-type" v-model="filterConditions.date" required>
                   <option v-bind:value="0" selected>{{
                   datasetOneWeek.locations.location[0].weatherElement[3].time[0].startTime.slice(0, 10) }}
                   </option>
@@ -20,18 +22,19 @@
               </div>
             </div>
 
-            <label for="highestTemperature">最高溫</label>
-            <input id="highestTemperature" type="number" min="-20" max="50"
+            <label class="form-label" for="highestTemperature">最高溫</label>
+            <input class="form-control" id="highestTemperature" type="number" min="-20" max="50"
               v-model="filterConditions.highestTemperature.value">
 
-            <label for="lowestTemperature">最低溫</label>
-            <input id="lowestTemperature" type="number" min="-20" max="50"
+            <label class="form-label" for="lowestTemperature">最低溫</label>
+            <input class="form-control" id="lowestTemperature" type="number" min="-20" max="50"
               v-model="filterConditions.lowestTemperature.value">
 
-            <label for="rainrate">降雨機率</label>
-            <input id="rainrate" type="number" min="0" max="100" v-model="filterConditions.rainrate.value">
-          </div>
-          <button type="button" v-on:click="filter">Filter</button>
+            <label class="form-label" for="rainrate">降雨機率</label>
+            <input class="form-control" id="rainrate" type="number" min="0" max="100"
+              v-model="filterConditions.rainrate.value">
+          </form>
+          <button class="btn btn-primary" v-on:click="filter">Filter</button>
         </div>
 
         <template v-if="filterMountains.length > 0">
@@ -79,7 +82,7 @@
 
       </div>
     </template>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -151,13 +154,68 @@ export default {
 </script>
 
 <style>
+/* 整個 filter-control-wrapper 的版、背景美觀 + input 美觀*/
+.main-container-weatherfilter .title-wrapper {
+  display: block;
+  width: 200px;
+  margin: 0px auto;
+}
+
+.filter-control-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  margin: 0px auto 10px;
+}
+
 .filterConditions-wrapper {
   display: flex;
   flex-direction: column;
-  max-width: 200px;
+  width: 100%;
 }
 
-.filterConditions-wrapper input {
-  margin-bottom: 10px;
+.filterConditions-wrapper label {
+  margin-bottom: 3px;
+}
+
+.filterConditions-wrapper .form-row,
+input {
+  margin-bottom: 8px;
+}
+
+.filter-control-wrapper .btn {
+  width: 75px;
+  padding: 2px 3px;
+}
+
+/* Small devices (landscape phones, 374px and down) */
+@media (min-width: 375px) {}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .main-container-weatherfilter .title-wrapper {
+    width: 400px;
+    margin: 0px auto;
+  }
+
+  .filter-control-wrapper {
+    width: 400px;
+    margin: 0px auto 20px;
+  }
+
+  .filterConditions-wrapper label {
+    margin-bottom: 5px;
+  }
+
+  .filterConditions-wrapper .form-row,
+  input {
+    margin-bottom: 12px;
+  }
+
+  .filter-control-wrapper .btn {
+    width: 150px;
+    padding: 4px 6px;
+  }
 }
 </style>
