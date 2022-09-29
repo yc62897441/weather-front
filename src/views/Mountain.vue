@@ -87,14 +87,14 @@
                     </div>
                   </td>
                 </template>
-                <template v-else-if="weatherElement.time.length === 12">
+                <template v-else-if="weatherElement.time.length === 11 || weatherElement.time.length === 12">
                   <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="index">
                     <div v-if="weatherElement.time[index - 1]">
                       {{ weatherElement.time[index - 1].elementValue.value }}
                     </div>
                   </td>
                 </template>
-                <template v-else-if="weatherElement.time.length === 6">
+                <template v-else-if="weatherElement.time.length === 6 || weatherElement.time.length === 5">
                   <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="index">
                     <div v-if="weatherElement.time[index - 1]">
                       {{ weatherElement.time[index - 1].elementValue.value }}
@@ -133,10 +133,36 @@ export default {
   },
   methods: {
     amendDatasetOneWeek() {
-      // weatherElement 第 8, 9, 12, 13, 14 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
-      const datasetOneWeekWeatherElementNeedToSetIndexs = [7, 8, 11, 13]
+      // weatherElement 第 0, 1, 3, 4, 5, 6 筆物件為溫度相關，加上 '°C'
+      // weatherElement 第 2, 9 筆物件與 % 相關，加上 '%'
+      // weatherElement 第 7, 8, 11, 13 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
+      const datasetOneWeekWeatherElementNeedToSetIndexs = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 13]
       datasetOneWeekWeatherElementNeedToSetIndexs.forEach(index => {
-        if (index === 7 || index === 8) {
+        if (index === 0 || index === 1 || index === 3 || index === 4 || index === 5 || index === 6) {
+          this.mountainOneWeek.weatherElement[index] = {
+            ...this.mountainOneWeek.weatherElement[index],
+            time: this.mountainOneWeek.weatherElement[index].time.map(eachTime => ({
+              elementValue: {
+                measures: eachTime.elementValue.measures,
+                value: eachTime.elementValue.value + '°C'
+              },
+              endTime: eachTime.endTime,
+              startTime: eachTime.startTime
+            }))
+          }
+        } else if (index === 2 || index === 9) {
+          this.mountainOneWeek.weatherElement[index] = {
+            ...this.mountainOneWeek.weatherElement[index],
+            time: this.mountainOneWeek.weatherElement[index].time.map(eachTime => ({
+              elementValue: {
+                measures: eachTime.elementValue.measures,
+                value: eachTime.elementValue.value ? eachTime.elementValue.value + '%' : ''
+              },
+              endTime: eachTime.endTime,
+              startTime: eachTime.startTime
+            }))
+          }
+        } else if (index === 7 || index === 8) {
           this.mountainOneWeek.weatherElement[index] = {
             ...this.mountainOneWeek.weatherElement[index],
             time: this.mountainOneWeek.weatherElement[index].time.map(eachTime => ({
@@ -164,10 +190,34 @@ export default {
       })
     },
     amendDatasetPerThreeHours() {
-      // weatherElement 第 7, 8, 10 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
-      const datasetPerThreeHoursWeatherElementNeedToSetIndexs = [6, 7]
+      // weatherElement 第 0, 1, 8 筆物件為溫度相關，加上 '°C'
+      // weatherElement 第 2, 3, 4 筆物件與 % 相關，加上 '%'
+      // weatherElement 第 6, 7 筆物件，其資訊結構需要再經整理成與其他筆物件格式一致
+      const datasetPerThreeHoursWeatherElementNeedToSetIndexs = [0, 1, 2, 3, 4, 6, 7, 8]
       datasetPerThreeHoursWeatherElementNeedToSetIndexs.forEach(index => {
-        if (index === 6) {
+        if (index === 0 || index === 1 || index === 8) {
+          this.mountainPerThreeHours.weatherElement[index] = {
+            ...this.mountainPerThreeHours.weatherElement[index],
+            time: this.mountainPerThreeHours.weatherElement[index].time.map(eachTime => ({
+              elementValue: {
+                measures: eachTime.elementValue.measures,
+                value: eachTime.elementValue.value + '°C'
+              },
+              dataTime: eachTime.dataTime
+            }))
+          }
+        } else if (index === 2 || index === 3 || index === 4) {
+          this.mountainPerThreeHours.weatherElement[index] = {
+            ...this.mountainPerThreeHours.weatherElement[index],
+            time: this.mountainPerThreeHours.weatherElement[index].time.map(eachTime => ({
+              elementValue: {
+                measures: eachTime.elementValue.measures,
+                value: eachTime.elementValue.value + '%'
+              },
+              dataTime: eachTime.dataTime
+            }))
+          }
+        } else if (index === 6) {
           this.mountainPerThreeHours.weatherElement[index] = {
             ...this.mountainPerThreeHours.weatherElement[index],
             time: this.mountainPerThreeHours.weatherElement[index].time.map(eachTime => ({
@@ -269,8 +319,8 @@ export default {
 }
 
 .mountain-table-cell-each-day_info_Wx img {
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
 }
 
 /* Medium devices (tablets, 768px and up) */
@@ -279,6 +329,11 @@ export default {
     padding-bottom: 5px;
     font-size: 1.2rem;
     font-weight: 700;
+  }
+
+  .mountain-table-cell-each-day_info_Wx img {
+    width: 50px;
+    height: 50px;
   }
 }
 </style>
