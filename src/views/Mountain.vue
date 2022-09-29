@@ -293,6 +293,11 @@ export default {
   font-weight: 700;
 }
 
+.table-header .mountain-table-cell-each-day>div:nth-child(1) {
+  font-size: 1.2rem;
+  padding: 3px 0px;
+}
+
 .mountain-table-body {
   /* 加入 display: block，才可以用 height 或 max-height 搭配 overflow 去設定超出高度後的樣式*/
   display: block;
@@ -300,9 +305,12 @@ export default {
   overflow: visible;
 }
 
-.table-header .mountain-table-cell-each-day>div:nth-child(1) {
-  font-size: 1.2rem;
-  padding: 3px 0px;
+.mountain-table-body .table-row:nth-child(4) {
+  color: firebrick;
+}
+
+.mountain-table-body .table-row:nth-child(5) {
+  color: darkblue
 }
 
 .mountain-table-cell-each-day {
