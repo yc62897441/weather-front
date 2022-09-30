@@ -2,7 +2,7 @@
   <div class="home">
     <Navbar class="navbar" />
     <Spinner v-if="isLoading" />
-    <WeatherOverview class="WeatherOverview" v-else v-bind:propDatasetOneWeek="datasetOneWeek" />
+    <WeatherOverview class="WeatherOverview" v-else v-bind:propDatasetOneWeek="propDatasetOneWeek" />
     <Footer class="footer" />
   </div>
 </template>
@@ -35,6 +35,7 @@ export default {
           location: []
         }
       },
+      propDatasetOneWeek: {},
       userSave: [],
       isLoading: true
     }
@@ -50,6 +51,10 @@ export default {
           throw new Error()
         }
 
+        this.datasetOneWeek = {
+          ...response.data.dataset
+        }
+
         const responseUserSave = await indexAPI.getUserSave()
         if (responseUserSave.data.userSaves) {
           responseUserSave.data.userSaves.forEach(item => {
@@ -58,13 +63,13 @@ export default {
         }
 
         const location = []
-        response.data.dataset.locations.location.forEach(item => {
+        this.datasetOneWeek.locations.location.forEach(item => {
           if (this.userSave.includes(item.parameterSet.parameter.parameterValue)) {
             location.push(item)
           }
         })
 
-        this.datasetOneWeek = {
+        this.propDatasetOneWeek = {
           datasetInfo: response.data.dataset.datasetInfo,
           locations: {
             location: location,

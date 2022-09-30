@@ -41,11 +41,11 @@ const routes = [
     name: 'signin',
     component: () => import('../views/Signin.vue')
   },
-  {
-    path: '/test',
-    name: 'test',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue')
-  },
+  // {
+  //   path: '/test',
+  //   name: 'test',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/Test.vue')
+  // },
   {
     path: '*',
     name: 'not-found',
@@ -85,12 +85,13 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  if (!store.state.isFetchDatasetOneWeek) {
-    store.state.isFetchDatasetOneWeek = await store.dispatch('fetchDatasetOneWeek')
-  }
-  if (!store.state.isFetchDatasetPerThreeHours) {
-    store.state.isFetchDatasetPerThreeHours = await store.dispatch('fetchDatasetPerThreeHours')
-  }
+  // 不要在這邊讀取資料，佈署到雲端平台後，首次開啟分頁會讀取很慢。改成各個 view 裡面去 fetch
+  // if (!store.state.isFetchDatasetOneWeek) {
+  //   store.state.isFetchDatasetOneWeek = await store.dispatch('fetchDatasetOneWeek')
+  // }
+  // if (!store.state.isFetchDatasetPerThreeHours) {
+  //   store.state.isFetchDatasetPerThreeHours = await store.dispatch('fetchDatasetPerThreeHours')
+  // }
   next()
 })
 

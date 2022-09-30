@@ -35,9 +35,9 @@
 </template>
 
 <script>
+import indexAPI from '../api/index'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
-import { mapState } from 'vuex'
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -52,10 +52,41 @@ export default {
     Navbar,
     Footer
   },
-  computed: {
-    ...mapState(['datasetPerThreeHours'])
+  data() {
+    return {
+      dataCategory: {
+        oneWeek: 'F-B0053-031', //登山一週24小時天氣預報
+        oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
+        perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
+      },
+      dataType: 'JSON',
+      datasetPerThreeHours: {
+        locations: {
+          location: []
+        }
+      },
+      isLoading: true
+    }
   },
   methods: {
+    async fetchDatasetPerThreeHours() {
+      try {
+        this.isLoading = true
+        const dataCategory = this.dataCategory.perThreeHours
+        const dataType = this.dataType
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+        if (response.status !== 200) {
+          throw new Error()
+        }
+        this.datasetPerThreeHours = {
+          ...response.data.dataset
+        }
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.warn(error)
+      }
+    },
     initMap() {
       const map = new Map({
         target: 'map',
@@ -91,9 +122,14 @@ export default {
       this.datasetPerThreeHours.locations.location[46].lon = '121.280036765'
     }
   },
-  mounted() {
-    this.adjust()
-    this.initMap()
+  async mounted() {
+    try {
+      await this.fetchDatasetPerThreeHours()
+      this.adjust()
+      this.initMap()
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 </script>

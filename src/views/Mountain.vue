@@ -113,9 +113,9 @@
 </template>
 
 <script>
+import indexAPI from '../api/index'
 import Navbar from '../components/Navbar.vue'
 import Footer from '../components/Footer.vue'
-import { mapState } from 'vuex'
 
 export default {
   components: {
@@ -124,14 +124,90 @@ export default {
   },
   data() {
     return {
+      dataCategory: {
+        oneWeek: 'F-B0053-031', //登山一週24小時天氣預報
+        oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
+        perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
+      },
+      dataType: 'JSON',
+      datasetOneWeek: {
+        locations: {
+          location: []
+        }
+      },
+      datasetPerThreeHours: {
+        locations: {
+          location: []
+        }
+      },
+      isLoading: true,
       mountainOneWeek: {},
       mountainPerThreeHours: {},
     }
   },
-  computed: {
-    ...mapState(['datasetOneWeek', 'datasetPerThreeHours'])
-  },
   methods: {
+    async fetchDatasetOneWeek() {
+      try {
+        this.isLoading = true
+        const dataCategory = this.dataCategory.oneWeek
+        const dataType = this.dataType
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+        if (response.status !== 200) {
+          throw new Error()
+        }
+
+        // 所有的 locations
+        this.datasetOneWeek = {
+          ...response.data.dataset
+        }
+
+        // 找出本頁特定的 location
+        this.datasetOneWeek.locations.location.forEach(locat => {
+          if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
+            this.mountainOneWeek = {
+              ...locat
+            }
+            this.amendDatasetOneWeek()
+          }
+        })
+
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.warn(error)
+      }
+    },
+    async fetchDatasetPerThreeHours() {
+      try {
+        this.isLoading = true
+        const dataCategory = this.dataCategory.perThreeHours
+        const dataType = this.dataType
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+        if (response.status !== 200) {
+          throw new Error()
+        }
+
+        // 所有的 locations
+        this.datasetPerThreeHours = {
+          ...response.data.dataset
+        }
+
+        // 找出本頁特定的 location
+        this.datasetPerThreeHours.locations.location.forEach(locat => {
+          if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
+            this.mountainPerThreeHours = {
+              ...locat
+            }
+            this.amendDatasetPerThreeHours()
+          }
+        })
+
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.warn(error)
+      }
+    },
     amendDatasetOneWeek() {
       // weatherElement 第 0, 1, 3, 4, 5, 6 筆物件為溫度相關，加上 '°C'
       // weatherElement 第 2, 9 筆物件與 % 相關，加上 '%'
@@ -266,23 +342,8 @@ export default {
     next()
   },
   mounted() {
-    this.datasetOneWeek.locations.location.forEach(locat => {
-      if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
-        this.mountainOneWeek = {
-          ...locat
-        }
-        this.amendDatasetOneWeek()
-      }
-    })
-
-    this.datasetPerThreeHours.locations.location.forEach(locat => {
-      if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
-        this.mountainPerThreeHours = {
-          ...locat
-        }
-        this.amendDatasetPerThreeHours()
-      }
-    })
+    this.fetchDatasetOneWeek()
+    this.fetchDatasetPerThreeHours()
   },
 }
 </script>

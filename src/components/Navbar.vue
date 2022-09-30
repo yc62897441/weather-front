@@ -59,19 +59,50 @@
 </template>
 
 <script>
+import indexAPI from '../api/index'
 import { mapState } from 'vuex'
 
 export default {
   data() {
     return {
+      dataCategory: {
+        oneWeek: 'F-B0053-031', //登山一週24小時天氣預報
+        oneWeekDayNight: 'F-B0053-033', //登山一週日夜天氣預報 33
+        perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
+      },
+      dataType: 'JSON',
+      datasetOneWeek: {
+        locations: {
+          location: []
+        }
+      },
+      isLoading: true,
       input: '',
       searchMountainList: []
     }
   },
   computed: {
-    ...mapState(['datasetOneWeek', 'currentUser', 'isAuthenticated'])
+    ...mapState(['isAuthenticated'])
   },
   methods: {
+    async fetchDatasetOneWeek() {
+      try {
+        this.isLoading = true
+        const dataCategory = this.dataCategory.oneWeek
+        const dataType = this.dataType
+        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+        if (response.status !== 200) {
+          throw new Error()
+        }
+        this.datasetOneWeek = {
+          ...response.data.dataset
+        }
+        this.isLoading = false
+      } catch (error) {
+        this.isLoading = false
+        console.warn(error)
+      }
+    },
     searchMountain() {
       if (this.input.length > 0) {
         this.searchMountainList = []
@@ -89,6 +120,9 @@ export default {
       this.$store.commit('revokeAuthentication')
       this.$router.push('/signin')
     }
+  },
+  mounted() {
+    this.fetchDatasetOneWeek()
   }
 }
 </script>
