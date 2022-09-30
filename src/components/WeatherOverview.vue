@@ -82,15 +82,16 @@
 
                       <label class="form-label" for="rainrate">未來6小時降雨機率(大於等於)</label>
                       <input class="form-control" id="rainrate" type="number" min="0" max="100"
-                        v-model="notifyConditions.rainrate.value">
+                        v-model="notifyConditions.rainrate.value" v-on:keyup.prevent.stop="valueInRange($event)">
 
                       <label class="form-label" for="temperature">未來3小時溫度(大於等於)</label>
-                      <input class="form-control" id="temperature" type="number" min="-10" max="50"
-                        v-model="notifyConditions.temperature.value">
+                      <input class="form-control" id="temperature" type="number" min="-20" max="50"
+                        v-model="notifyConditions.temperature.value" v-on:keyup.prevent.stop="valueInRange($event)">
 
                       <label class="form-label" for="apparentTemperature">未來3小時體感溫度(大於等於)</label>
-                      <input class="form-control" id="apparentTemperature" type="number" min="-10" max="50"
-                        v-model="notifyConditions.apparentTemperature.value">
+                      <input class="form-control" id="apparentTemperature" type="number" min="-20" max="50"
+                        v-model="notifyConditions.apparentTemperature.value"
+                        v-on:keyup.prevent.stop="valueInRange($event)">
                     </form>
                     <button type="button" class="btn btn-danger"
                       v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"
@@ -236,6 +237,34 @@ export default {
         const response = await indexAPI.offNotify({ formData })
       } catch (error) {
         console.warn(error)
+      }
+    },
+    valueInRange(event) {
+      switch (event.target.id) {
+        case 'rainrate':
+          if (this.notifyConditions.rainrate.value > 100) {
+            this.notifyConditions.rainrate.value = 100
+          }
+          if (this.notifyConditions.rainrate.value < 0) {
+            this.notifyConditions.rainrate.value = 0
+          }
+          break
+        case 'temperature':
+          if (this.notifyConditions.temperature.value > 50) {
+            this.notifyConditions.temperature.value = 50
+          }
+          if (this.notifyConditions.temperature.value < -20) {
+            this.notifyConditions.temperature.value = -20
+          }
+          break
+        case 'apparentTemperature':
+          if (this.notifyConditions.apparentTemperature.value > 50) {
+            this.notifyConditions.apparentTemperature.value = 50
+          }
+          if (this.notifyConditions.apparentTemperature.value < -20) {
+            this.notifyConditions.apparentTemperature.value = -20
+          }
+          break
       }
     },
   },
