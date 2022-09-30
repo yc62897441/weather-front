@@ -104,16 +104,18 @@ export default {
 }
 
 .main-container-weathermap .title-wrapper {
+  position: relative;
   width: 250px;
   margin: 0px auto;
 }
 
 #map {
+  /* 讓手機板地圖左右貼滿銀幕，把 main-container 讀 padding-left 15px 減回去 */
+  position: relative;
+  top: 0px;
+  left: -15px;
   display: block;
-  /* position: absolute;
-  top: 100px;
-  bottom: 0; */
-  width: 250px;
+  width: 100vw;
   height: 450px;
   margin: 0px auto;
 }
@@ -165,7 +167,7 @@ export default {
   }
 
   #map {
-    width: 350px;
+    width: 100vw;
     height: 600px;
   }
 
@@ -181,6 +183,8 @@ export default {
   }
 
   #map {
+    position: static;
+    left: 0px;
     width: 550px;
     height: 700px;
   }
