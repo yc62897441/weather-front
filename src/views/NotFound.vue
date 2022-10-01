@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Navbar class="navbar"/>
+    <Navbar class="navbar" />
     <template>
       <div class="not-found-wrapper">
         <h1>
@@ -8,7 +8,7 @@
         </h1>
       </div>
     </template>
-    <Footer class="footer"/>
+    <Footer class="footer" />
   </div>
 </template>
 
@@ -30,8 +30,26 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100vw;
-  height: 500px;
+  height: 100vh;
+  padding-bottom: 20vh;
   background-color: #FBFBFB;
-  font-size: 3rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+/* Small devices (landscape phones, 374px and down) */
+@media (min-width: 375px) {
+  .not-found-wrapper {
+    font-size: 2.4rem;
+    font-weight: 700;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .not-found-wrapper {
+    font-size: 3rem;
+    font-weight: 900;
+  }
 }
 </style>
