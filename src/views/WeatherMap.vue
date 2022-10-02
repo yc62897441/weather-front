@@ -9,8 +9,9 @@
         <div id="map"></div>
         <div class="mark_mountain_wrapper" v-for="locat in datasetPerThreeHours.locations.location"
           v-bind:key="locat.parameterSet.parameter.parameterValue">
+          <!-- 拿掉屬性 target="_blank"，不會以新開分頁的方式開啟連結 -->
           <router-link class="overlay link" v-bind:id="'MtId'+ locat.parameterSet.parameter.parameterValue"
-            v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue" target="_blank">
+            v-bind:to="'/mountain/' + locat.parameterSet.parameter.parameterValue">
             <div class="mark_mountain_info_wrapper">
               <div class="mark_mountain_info_name">
                 {{locat.locationName}}
