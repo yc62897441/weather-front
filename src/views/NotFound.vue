@@ -32,9 +32,10 @@ export default {
   width: 100vw;
   height: 100vh;
   padding-bottom: 20vh;
-  background-color: #FBFBFB;
+  background-color: var(--main);
   font-size: 2rem;
   font-weight: 400;
+  color: var(--main-font-color);
 }
 
 /* Small devices (landscape phones, 374px and down) */

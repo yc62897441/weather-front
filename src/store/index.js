@@ -31,7 +31,8 @@ export default new Vuex.Store({
       LINE_USER_ID: null
     },
     token: '',
-    isAuthenticated: false
+    isAuthenticated: false,
+    darkMode: false
   },
   getters: {
   },
@@ -63,6 +64,9 @@ export default new Vuex.Store({
       state.isAuthenticated = false
       state.token = ''
       localStorage.removeItem('token')
+    },
+    switchDarkMode(state, data) {
+      state.darkMode = data
     }
   },
   actions: {

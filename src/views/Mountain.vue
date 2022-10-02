@@ -367,11 +367,11 @@ export default {
 }
 
 .mountain-table-body .table-row:nth-child(4) {
-  color: firebrick;
+  color:var(--table-font-hot);
 }
 
 .mountain-table-body .table-row:nth-child(5) {
-  color: darkblue
+  color: var(--table-font-cold);
 }
 
 .mountain-table-cell-each-day {

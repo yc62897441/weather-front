@@ -26,17 +26,20 @@
         </div>
       </div>
     </div>
+    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 import Navbar from '../components/Navbar.vue'
+import Footer from '../components/Footer.vue'
 import indexAPI from '../api/index'
 import { Toast } from '../utils/helpers'
 
 export default {
   components: {
-    Navbar
+    Navbar,
+    Footer
   },
   data() {
     return {

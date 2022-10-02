@@ -53,6 +53,16 @@
             <div class="btn btn-success">登入or註冊</div>
           </router-link>
         </template>
+        <!-- darkmode toggle -->
+        <template>
+          <div class="sidebar__menu__link">
+            <label class="darkmode_label" for="darkmode_toggle">
+              <img v-if="!darkMode" src="../assets/dark_mode_moon.png" title="夜間模式" v-on:click="switchMode">
+              <img v-else src="../assets/dark_mode_sun.png" title="日間模式" v-on:click="switchMode">
+            </label>
+            <input type="checkbox" class="darkmode_input" id="darkmode_toggle" />
+          </div>
+        </template>
       </div>
     </div>
   </div>
@@ -78,11 +88,11 @@ export default {
       },
       isLoading: true,
       input: '',
-      searchMountainList: []
+      searchMountainList: [],
     }
   },
   computed: {
-    ...mapState(['isAuthenticated'])
+    ...mapState(['isAuthenticated', 'darkMode'])
   },
   methods: {
     async fetchDatasetOneWeek() {
@@ -119,6 +129,17 @@ export default {
     signout() {
       this.$store.commit('revokeAuthentication')
       this.$router.push('/signin')
+    },
+    // dark mode switch
+    switchMode() {
+      if (!this.darkMode) {
+        // 將 Vue 物件提交 mutation 事件，'switchDarkMode' 是在 mutations 定義好的 switchDarkMode
+        this.$store.commit('switchDarkMode', true)
+        document.documentElement.setAttribute("data-theme", "dark");
+      } else {
+        this.$store.commit('switchDarkMode', false)
+        document.documentElement.setAttribute("data-theme", "light");
+      }
     }
   },
   mounted() {
@@ -135,7 +156,7 @@ export default {
   justify-content: space-between;
   width: 100vw;
   height: 60px;
-  background-color: #EEEEEE;
+  background-color: var(--navbar-container);
 }
 
 .navbar-container-left {
@@ -175,7 +196,7 @@ export default {
   width: 100%;
   height: 40px;
   padding-left: 15px;
-  background-color: #EEEEEE;
+  background-color: var(--navbar-wrapper);
   z-index: 999;
 
   /*  轉場動畫  */
@@ -203,18 +224,18 @@ export default {
 }
 
 .search-wrapper .form-control {
-  width: 110px;
+  width: 90px;
 }
 
 .search-list {
   position: absolute;
   top: 35px;
-  width: 110px;
+  width: 90px;
   z-index: 999;
   padding: 3px 12px;
   border: 2px solid rgb(34, 92, 178);
   border-radius: 5px;
-  background-color: #FFFFFF;
+  background-color: var(--search-list);
 }
 
 .search-list-item {
@@ -236,6 +257,28 @@ export default {
 .user-wrapper .btn {
   padding: 2px 3px;
 }
+
+/* dark mode switch */
+.darkmode_label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  height: 40px;
+  width: 30px;
+  padding-left: 3px;
+}
+
+.darkmode_label img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.darkmode_input {
+  display: none;
+}
+
+/* dark mode switch */
 
 /* Small devices (landscape phones, 374px and down) */
 @media (min-width: 375px) {

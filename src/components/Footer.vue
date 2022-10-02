@@ -23,7 +23,8 @@ export default {
   height: 75px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #EEEEEE;
+  background-color: var(--footer-container);
+  color: var(--main-font-color);
 }
 
 h6 {

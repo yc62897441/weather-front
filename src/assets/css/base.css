@@ -147,11 +147,48 @@ table {
 /* global */
 /* global */
 
+:root {
+  --main: #FBFBFB;
+  --main-font-color: #000000;
+  --main-link-color: #0D6EFD;
+  --main-link-hover-color: #1133DD;
+
+  /* table */
+  --table-light: #FBFBFB;
+  --table-dark: #E9E9E9;
+  --table-font-hot: #B22222;
+  --table-font-cold: #00008B;
+
+  /* navbar & footer */
+  --navbar-container: #EEEEEE;
+  --navbar-wrapper: #EEEEEE;
+  --search-list: #FFFFFF;
+
+  --footer-container: #EEEEEE;
+}
+
+[data-theme="dark"] {
+  --main: #707070;
+  --main-font-color: #FBFBFB;
+  --main-link-color: #FBFBFB;
+  --main-link-hover-color: #E3E3E3;
+
+  /* table */
+  --table-light: #505050;
+  --table-dark: #404040;
+  --table-font-hot: #ff8800;
+  --table-font-cold: #00aaff;
+
+  /* navbar & footer */
+  --navbar-container: #505050;
+  --navbar-wrapper: #505050;
+  --search-list: #707070;
+  --footer-container: #505050;
+}
+
 * {
   box-sizing: border-box;
 }
-
-.home {}
 
 .navbar {
   position: fixed;
@@ -168,21 +205,29 @@ table {
 
 .main-container {
   width: 100vw;
+  height: calc(100vh - 75px);
   overflow: scroll;
   padding: 80px 15px 0px;
-  margin-bottom: 95px;
+  margin-bottom: 75px;
+  background-color: var(--main);
 }
 
 .title-wrapper {
   padding-bottom: 5px;
   font-size: 1.2rem;
   font-weight: 700;
+  color: var(--main-font-color);
+}
+
+.subtitle-wrapper {
+  color: var(--main-font-color);
 }
 
 /* 表格相關 */
 .main-table {
-  background-color: #FBFBFB;
+  background-color: var(--table-light);
   border: 2px solid #555555;
+  color: var(--main-font-color);
 }
 
 .table-header {
@@ -204,7 +249,7 @@ table {
 }
 
 .table-row:nth-child(2n) {
-  background-color: #E9E9E9;
+  background-color: var(--table-dark);
 }
 
 .table-cell {
@@ -236,7 +281,7 @@ table {
   display: block;
   width: 20px;
   height: 20px;
-  background-color: #E9E9E9;
+  background-color: var(--table-dark);
   border: 2px solid #555555;
   border-radius: 50%;
   content: ' ';
@@ -264,6 +309,14 @@ table {
 /* 連結相關 */
 .link {
   text-decoration: none;
+}
+
+a {
+  color: var(--main-link-color);
+}
+
+a:hover {
+  color: var(--main-link-hover-color);
 }
 
 /* Medium devices (tablets, 768px and up) */

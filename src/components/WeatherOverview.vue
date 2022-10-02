@@ -298,11 +298,11 @@ export default {
 }
 
 .table-cell-each-day div div:nth-child(1) {
-  color: firebrick;
+  color: var(--table-font-hot);
 }
 
 .table-cell-each-day div div:nth-child(2) {
-  color: darkblue
+  color: var(--table-font-cold);
 }
 
 .table-cell-each-day div div:nth-child(4) img {
