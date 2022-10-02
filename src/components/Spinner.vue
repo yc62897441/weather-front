@@ -12,6 +12,10 @@
 .spinner {
   position: relative;
   padding-top: 100px;
+  width: 100vw;
+  height: calc(100vh - 75px);
+  margin-bottom: 75px;
+  background-color: var(--main);
 }
 
 .bouncing-loader {
