@@ -15,7 +15,7 @@
             <tr class="table-row">
               <th class="table-cell table-cell-name"></th>
               <th class="table-cell mountain-table-cell-each-day" v-for="time in mountainOneWeek.weatherElement[3].time"
-                v-bind:key="'date' + time.startTime">
+                v-bind:key="'OneWeek date' + time.startTime">
                 <div>{{ time.startTime.slice(0, 10) }}</div>
               </th>
             </tr>
@@ -23,10 +23,10 @@
 
           <tbody class="table-body mountain-table-body">
             <tr class="table-row" v-for="weatherElement in mountainOneWeek.weatherElement"
-              v-bind:key="weatherElement.description">
+              v-bind:key="'OneWeek date' + weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
               <template v-if="weatherElement.description === '天氣現象'">
-                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="'OneWeek date' + index">
                   <div class="mountain-table-cell-each-day_info_Wx">
                     <img
                       v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
@@ -36,7 +36,7 @@
                 </td>
               </template>
               <template v-else>
-                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="index">
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 7" v-bind:key="'OneWeek date' + index">
                   <div>
                     <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
                     1].elementValue.value
@@ -60,17 +60,17 @@
             <tr class="table-row">
               <th class="table-cell table-cell-name"></th>
               <th class="table-cell mountain-table-cell-each-day"
-                v-for="time in mountainPerThreeHours.weatherElement[0].time" v-bind:key="'dataTime' + time">
+                v-for="time in mountainPerThreeHours.weatherElement[0].time" v-bind:key="'ThreeHours dataTime' + time.dataTime">
                 <div>{{ time.dataTime.slice(0, 10) }} {{ time.dataTime.slice(11, 16) }}</div>
               </th>
             </tr>
           </thead>
           <tbody class="table-body">
             <tr class="table-row" v-for="weatherElement in mountainPerThreeHours.weatherElement"
-              v-bind:key="weatherElement.description">
+              v-bind:key="'ThreeHours' + weatherElement.description">
               <td class="table-cell table-cell-name"> {{ weatherElement.description }} </td>
               <template v-if="weatherElement.description === '天氣現象'">
-                <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="index">
+                <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="'ThreeHours' + index">
                   <div class="mountain-table-cell-each-day_info_Wx" v-if="weatherElement.time[index - 1]">
                     <img
                       v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
@@ -81,21 +81,21 @@
               </template>
               <template v-else>
                 <template v-if="weatherElement.time.length === 24">
-                  <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="index">
+                  <td class="table-cell mountain-table-cell-each-day" v-for="index in 24" v-bind:key="'ThreeHours' + index">
                     <div v-if="weatherElement.time[index - 1]">
                       {{ weatherElement.time[index - 1].elementValue.value }}
                     </div>
                   </td>
                 </template>
                 <template v-else-if="weatherElement.time.length === 11 || weatherElement.time.length === 12">
-                  <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="index">
+                  <td class="table-cell mountain-table-cell-each-day-colspan-2" v-for="index in 12" v-bind:key="'ThreeHours' + index">
                     <div v-if="weatherElement.time[index - 1]">
                       {{ weatherElement.time[index - 1].elementValue.value }}
                     </div>
                   </td>
                 </template>
                 <template v-else-if="weatherElement.time.length === 6 || weatherElement.time.length === 5">
-                  <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="index">
+                  <td class="table-cell mountain-table-cell-each-day-colspan-4" v-for="index in 6" v-bind:key="'ThreeHours' + index">
                     <div v-if="weatherElement.time[index - 1]">
                       {{ weatherElement.time[index - 1].elementValue.value }}
                     </div>
