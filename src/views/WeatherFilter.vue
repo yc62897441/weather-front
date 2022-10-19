@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar class="navbar" />
     <template>
       <div class="main-container main-container-weatherfilter overflow-default-hidden">
         <div class="title-wrapper">
@@ -82,21 +81,14 @@
 
       </div>
     </template>
-    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 import indexAPI from '../api/index'
-import Navbar from '../components/Navbar.vue'
-import Footer from '../components/Footer.vue'
 import { Toast } from '../utils/helpers'
 
 export default {
-  components: {
-    Navbar,
-    Footer
-  },
   data() {
     return {
       dataCategory: {

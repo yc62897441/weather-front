@@ -1,25 +1,19 @@
 <template>
   <div class="home">
-    <Navbar class="navbar" />
     <Spinner v-if="isLoading" />
     <WeatherOverview class="WeatherOverview" v-else v-bind:propDatasetOneWeek="propDatasetOneWeek" />
-    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 import indexAPI from '../api/index'
 
-import Navbar from '../components/Navbar.vue'
 import WeatherOverview from '../components/WeatherOverview.vue'
-import Footer from '../components/Footer.vue'
 import Spinner from '../components/Spinner'
 
 export default {
   components: {
-    Navbar,
     WeatherOverview,
-    Footer,
     Spinner
   },
   data() {

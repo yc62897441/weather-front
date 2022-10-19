@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar class="navbar" />
     <template>
       <div class="main-container main-container-weathermap">
         <div class="title-wrapper">
@@ -31,14 +30,11 @@
         </div>
       </div>
     </template>
-    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 import indexAPI from '../api/index'
-import Navbar from '../components/Navbar.vue'
-import Footer from '../components/Footer.vue'
 
 import Map from 'ol/Map';
 import View from 'ol/View';
@@ -49,10 +45,6 @@ import Overlay from 'ol/Overlay'
 import { fromLonLat, toLonLat } from 'ol/proj';
 
 export default {
-  components: {
-    Navbar,
-    Footer
-  },
   data() {
     return {
       dataCategory: {

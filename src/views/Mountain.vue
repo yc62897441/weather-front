@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <Navbar class="navbar" />
     <div class="main-container main-container-mountain">
       <div class="title-wrapper">
         <h1>{{ mountainOneWeek.locationName }}</h1>
@@ -108,20 +107,13 @@
       </div>
 
     </div>
-    <Footer class="footer" />
   </div>
 </template>
 
 <script>
 import indexAPI from '../api/index'
-import Navbar from '../components/Navbar.vue'
-import Footer from '../components/Footer.vue'
 
 export default {
-  components: {
-    Navbar,
-    Footer
-  },
   data() {
     return {
       dataCategory: {
