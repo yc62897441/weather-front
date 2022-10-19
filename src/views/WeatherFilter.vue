@@ -1,6 +1,7 @@
 <template>
   <div class="home">
-    <template>
+    <Spinner v-if="isLoading" />
+    <template v-else>
       <div class="main-container main-container-weatherfilter overflow-default-hidden">
         <div class="title-wrapper">
           <h1>天氣條件檢索</h1>
@@ -86,9 +87,13 @@
 
 <script>
 import indexAPI from '../api/index'
+import Spinner from '../components/Spinner'
 import { Toast } from '../utils/helpers'
 
 export default {
+  components: {
+    Spinner
+  },
   data() {
     return {
       dataCategory: {
