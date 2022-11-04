@@ -1,7 +1,7 @@
 <template>
   <div class="main-container main-container-weatheroverview">
     <div class="title-wrapper">
-      <h1>{{pageTitle}}</h1>
+      <h1>{{ pageTitle }}</h1>
     </div>
     <table class="main-table">
       <thead class="table-header">
@@ -34,10 +34,10 @@
           </template>
           <template v-if="isAuthenticated">
             <td class="table-cell table-cell-notify notified" data-bs-toggle="modal"
-              v-bind:data-bs-target="'#notificationModal'+locat.parameterSet.parameter.parameterValue"
+              v-bind:data-bs-target="'#notificationModal' + locat.parameterSet.parameter.parameterValue"
               v-if="userNotificationMountainId === locat.parameterSet.parameter.parameterValue"></td>
             <td class="table-cell table-cell-notify" data-bs-toggle="modal"
-              v-bind:data-bs-target="'#notificationModal'+locat.parameterSet.parameter.parameterValue" v-else>
+              v-bind:data-bs-target="'#notificationModal' + locat.parameterSet.parameter.parameterValue" v-else>
             </td>
           </template>
           <td class="table-cell table-cell-name">
@@ -52,7 +52,7 @@
               <div>{{ locat.weatherElement[9].time[index - 1].elementValue.value || 'NA' }}%</div>
               <div>
                 <img
-                  v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + locat.weatherElement[12].time[index - 1].elementValue[1].value +'.svg'"
+                  v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + locat.weatherElement[12].time[index - 1].elementValue[1].value + '.svg'"
                   v-bind:title="locat.weatherElement[12].time[index - 1].elementValue[0].value"
                   v-bind:alt="locat.weatherElement[12].time[index - 1].elementValue[0].value">
               </div>
@@ -60,7 +60,7 @@
           </td>
 
           <!-- Modal -->
-          <div class="modal fade" v-bind:id="'notificationModal'+locat.parameterSet.parameter.parameterValue"
+          <div class="modal fade" v-bind:id="'notificationModal' + locat.parameterSet.parameter.parameterValue"
             tabindex="-1" aria-labelledby="notificationModal" aria-hidden="true">
             <div class="modal-dialog">
               <div class="modal-content">
@@ -124,6 +124,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { Toast } from '../utils/helpers'
 import indexAPI from '../api/index'
 
 export default {
@@ -167,6 +168,15 @@ export default {
         }
       } catch (error) {
         console.warn(error)
+        // 當 token 過期，刪除 store user資料，導回登入夜面
+        if (error.message === 'Request failed with status code 401') {
+          Toast.fire({
+            icon: 'error',
+            title: '權限存取有誤，請重新登入'
+          })
+          this.$store.commit('revokeAuthentication')
+          this.$router.push({ path: '/signin' })
+        }
       }
     },
     async addToUserSave(id) {
@@ -275,8 +285,11 @@ export default {
       this.pageTitle = '蒐藏列表'
     }
 
-    this.fetchUserSave()
-    this.fetchUserNotification()
+    // 當入狀態才去撈使用者蒐藏、通知設定的資料
+    if (this.isAuthenticated) {
+      this.fetchUserSave()
+      this.fetchUserNotification()
+    }
   }
 }
 

@@ -10,6 +10,7 @@ import indexAPI from '../api/index'
 
 import WeatherOverview from '../components/WeatherOverview.vue'
 import Spinner from '../components/Spinner'
+import { Toast } from '../utils/helpers'
 
 export default {
   components: {
@@ -74,6 +75,16 @@ export default {
       } catch (error) {
         this.isLoading = false
         console.warn(error)
+
+        // 當 token 過期，刪除 store user資料，導回登入夜面
+        if (error.message === 'Request failed with status code 401') {
+          Toast.fire({
+            icon: 'error',
+            title: '權限存取有誤，請重新登入'
+          })
+          this.$store.commit('revokeAuthentication')
+          this.$router.push({ path: '/signin' })
+        }
       }
     },
   },
@@ -84,4 +95,5 @@ export default {
 </script>
 
 <style>
+
 </style>
