@@ -63,7 +63,6 @@ router.beforeEach(async (to, from, next) => {
   // 如果有登入了，兩者都會有東西
   const token = localStorage.getItem('token')
   const tokenInStore = store.state.token
-  let currentUser = store.state.currentUser
 
   // 如果有登入了，store.state.isAuthenticated 會是 true
   let isAuthenticated = store.state.isAuthenticated
@@ -75,7 +74,6 @@ router.beforeEach(async (to, from, next) => {
   if (token && (token !== tokenInStore)) {
     // 取得驗證成功與否 fetchCurrentUser() 回傳 true or false
     isAuthenticated = await store.dispatch('fetchCurrentUser')
-    currentUser = store.state.currentUser
   }
 
   // 如果 isAuthenticated 為 false，且進入需要驗證的頁面，則轉址到登入頁

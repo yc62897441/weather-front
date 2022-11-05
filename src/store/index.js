@@ -13,16 +13,16 @@ export default new Vuex.Store({
       perThreeHours: 'F-B0053-035' //登山三天3小時天氣預報
     },
     dataType: 'JSON',
-    datasetOneWeek: {
-      locations: {
-        location: []
-      }
-    },
-    datasetPerThreeHours: {
-      locations: {
-        location: []
-      }
-    },
+    // datasetOneWeek: {
+    //   locations: {
+    //     location: []
+    //   }
+    // },
+    // datasetPerThreeHours: {
+    //   locations: {
+    //     location: []
+    //   }
+    // },
     isFetchDatasetOneWeek: false,
     isFetchDatasetPerThreeHours: false,
     currentUser: {
@@ -37,16 +37,16 @@ export default new Vuex.Store({
   getters: {
   },
   mutations: {
-    setDatasetOneWeek(state, data) {
-      state.datasetOneWeek = {
-        ...data,
-      }
-    },
-    setDatasetPerThreeHours(state, data) {
-      state.datasetPerThreeHours = {
-        ...data,
-      }
-    },
+    // setDatasetOneWeek(state, data) {
+    //   state.datasetOneWeek = {
+    //     ...data,
+    //   }
+    // },
+    // setDatasetPerThreeHours(state, data) {
+    //   state.datasetPerThreeHours = {
+    //     ...data,
+    //   }
+    // },
     setCurrentUser(state, currentUser) {
       // 將資料存到 state 中，供所有 vue 元件取用
       state.currentUser = {
@@ -70,42 +70,42 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    async fetchDatasetOneWeek({ commit }) {
-      try {
-        const dataCategory = store.state.dataCategory.oneWeek
-        const dataType = store.state.dataType
-        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
-        if (response.status !== 200) {
-          throw new Error()
-        }
-        const data = {
-          ...response.data.dataset
-        }
-        commit('setDatasetOneWeek', data)
-        return true
-      } catch (error) {
-        console.warn(error)
-        return false
-      }
-    },
-    async fetchDatasetPerThreeHours({ commit }) {
-      try {
-        const dataCategory = store.state.dataCategory.perThreeHours
-        const dataType = store.state.dataType
-        const response = await indexAPI.getWeatherData({ dataCategory, dataType })
-        if (response.status !== 200) {
-          throw new Error()
-        }
-        const data = {
-          ...response.data.dataset
-        }
-        commit('setDatasetPerThreeHours', data)
-        return true
-      } catch (error) {
-        console.warn(error)
-        return false
-      }
-    },
+    // async fetchDatasetOneWeek({ commit }) {
+    //   try {
+    //     const dataCategory = store.state.dataCategory.oneWeek
+    //     const dataType = store.state.dataType
+    //     const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+    //     if (response.status !== 200) {
+    //       throw new Error()
+    //     }
+    //     const data = {
+    //       ...response.data.dataset
+    //     }
+    //     commit('setDatasetOneWeek', data)
+    //     return true
+    //   } catch (error) {
+    //     console.warn(error)
+    //     return false
+    //   }
+    // },
+    // async fetchDatasetPerThreeHours({ commit }) {
+    //   try {
+    //     const dataCategory = store.state.dataCategory.perThreeHours
+    //     const dataType = store.state.dataType
+    //     const response = await indexAPI.getWeatherData({ dataCategory, dataType })
+    //     if (response.status !== 200) {
+    //       throw new Error()
+    //     }
+    //     const data = {
+    //       ...response.data.dataset
+    //     }
+    //     commit('setDatasetPerThreeHours', data)
+    //     return true
+    //   } catch (error) {
+    //     console.warn(error)
+    //     return false
+    //   }
+    // },
     async fetchCurrentUser({ commit }) {
       try {
         // 每次路由改變(如重新整理)時，都會再去 getCurrentUser，並且用 setCurrentUser 將資料存到 vuex state 中
