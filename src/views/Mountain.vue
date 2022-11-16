@@ -31,7 +31,7 @@
                     v-bind:key="'OneWeek date' + index">
                     <div class="mountain-table-cell-each-day_info_Wx">
                       <img
-                        v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
+                        v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value + '.svg'"
                         v-bind:title="weatherElement.time[index - 1].elementValue[0].value"
                         v-bind:alt="weatherElement.time[index - 1].elementValue[0].value">
                     </div>
@@ -42,7 +42,7 @@
                     v-bind:key="'OneWeek date' + index">
                     <div>
                       <div v-if="weatherElement.time[index - 1].elementValue.value">{{ weatherElement.time[index -
-                      1].elementValue.value
+                          1].elementValue.value
                       }}</div>
                     </div>
                   </td>
@@ -78,7 +78,7 @@
                     v-bind:key="'ThreeHours' + index">
                     <div class="mountain-table-cell-each-day_info_Wx" v-if="weatherElement.time[index - 1]">
                       <img
-                        v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value +'.svg'"
+                        v-bind:src="'https://www.cwb.gov.tw/V8/assets/img/weather_icons/weathers/svg_icon/day/' + weatherElement.time[index - 1].elementValue[1].value + '.svg'"
                         v-bind:title="weatherElement.time[index - 1].elementValue[0].value"
                         v-bind:alt="weatherElement.time[index - 1].elementValue[0].value">
                     </div>
@@ -162,21 +162,10 @@ export default {
         }
 
         // 所有的 locations
-        this.datasetOneWeek = {
-          ...response.data.dataset
-        }
-
-        // 找出本頁特定的 location
-        this.datasetOneWeek.locations.location.forEach(locat => {
-          if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
-            this.mountainOneWeek = {
-              ...locat
-            }
-            this.amendDatasetOneWeek()
-          }
-        })
-
-        this.isLoading = false
+        this.datasetOneWeek = []
+        this.datasetOneWeek = [
+          ...response.data.dataset.locations.location
+        ]
       } catch (error) {
         this.isLoading = false
         console.warn(error)
@@ -193,21 +182,10 @@ export default {
         }
 
         // 所有的 locations
-        this.datasetPerThreeHours = {
-          ...response.data.dataset
-        }
-
-        // 找出本頁特定的 location
-        this.datasetPerThreeHours.locations.location.forEach(locat => {
-          if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
-            this.mountainPerThreeHours = {
-              ...locat
-            }
-            this.amendDatasetPerThreeHours()
-          }
-        })
-
-        this.isLoading = false
+        this.datasetPerThreeHours = []
+        this.datasetPerThreeHours = [
+          ...response.data.dataset.locations.location
+        ]
       } catch (error) {
         this.isLoading = false
         console.warn(error)
@@ -324,32 +302,69 @@ export default {
       })
     }
   },
-  beforeRouteUpdate(to, from, next) {
-    if (this.$route.name === 'mountain') {
-      this.datasetOneWeek.locations.location.forEach(locat => {
-        if (locat.parameterSet.parameter.parameterValue === to.params.id) {
+  async beforeRouteUpdate(to, from, next) {
+    try {
+      if (this.$route.name === 'mountain') {
+        await this.fetchDatasetOneWeek()
+        await this.fetchDatasetPerThreeHours()
+        
+        // 找出本頁特定的 location
+        this.datasetOneWeek.forEach(locat => {
+          if (locat.parameterSet.parameter.parameterValue === to.params.id) {
+            this.mountainOneWeek = {
+              ...locat
+            }
+          }
+        })
+        this.amendDatasetOneWeek()
+
+        // 找出本頁特定的 location
+        this.datasetPerThreeHours.forEach(locat => {
+          if (locat.parameterSet.parameter.parameterValue === to.params.id) {
+            this.mountainPerThreeHours = {
+              ...locat
+            }
+          }
+        })
+        this.amendDatasetPerThreeHours()
+
+        this.isLoading = false
+      }
+      next()
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  async created() {
+    try {
+      await this.fetchDatasetOneWeek()
+      await this.fetchDatasetPerThreeHours()
+
+      // 找出本頁特定的 location
+      this.datasetOneWeek.forEach(locat => {
+        if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
           this.mountainOneWeek = {
             ...locat
           }
-          this.amendDatasetOneWeek()
         }
       })
+      this.amendDatasetOneWeek()
 
-      this.datasetPerThreeHours.locations.location.forEach(locat => {
-        if (locat.parameterSet.parameter.parameterValue === to.params.id) {
+      // 找出本頁特定的 location
+      this.datasetPerThreeHours.forEach(locat => {
+        if (locat.parameterSet.parameter.parameterValue === this.$route.params.id) {
           this.mountainPerThreeHours = {
             ...locat
           }
-          this.amendDatasetPerThreeHours()
         }
       })
+      this.amendDatasetPerThreeHours()
+
+      this.isLoading = false
+    } catch (error) {
+      console.log(error)
     }
-    next()
-  },
-  mounted() {
-    this.fetchDatasetOneWeek()
-    this.fetchDatasetPerThreeHours()
-  },
+  }
 }
 </script>
 <style>
